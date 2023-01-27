@@ -6,21 +6,34 @@
 //
 
 import SwiftUI
+import Amplify
 
 struct ContentView: View {
+    
+    @EnvironmentObject var authSessionManager: AuthSessionManager
+    let user: User
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        TabView {
+            DashBoardView(user: user)
+                .tabItem {
+                    Label("Dashboard", systemImage: "house")
+                }
+            StatisticsView()
+                .tabItem {
+                    Label("Statistics", systemImage: "chart.pie")
+                }
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gear")
+                }
         }
-        .padding()
+
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//    }
+//}
