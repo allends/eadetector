@@ -21,6 +21,14 @@
 		9F2461C5298445400060574F /* DashBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461C4298445400060574F /* DashBoardView.swift */; };
 		9F2461C72984460E0060574F /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461C62984460E0060574F /* StatisticsView.swift */; };
 		9F2461C9298446250060574F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461C8298446250060574F /* SettingsView.swift */; };
+		9F2461CC298458EF0060574F /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461CB298458EF0060574F /* HealthStore.swift */; };
+		9F2461CE2984A2A70060574F /* styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461CD2984A2A70060574F /* styles.swift */; };
+		9F2461D02984B3650060574F /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461CF2984B3650060574F /* Step.swift */; };
+		9F2461D32984B4030060574F /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461D22984B4030060574F /* ActivityView.swift */; };
+		9F2461D52984C5340060574F /* HealthStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461D42984C5340060574F /* HealthStat.swift */; };
+		9F2461D72984C57E0060574F /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461D62984C57E0060574F /* Activity.swift */; };
+		9F2461D92984C81A0060574F /* ActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461D82984C81A0060574F /* ActivityViewModel.swift */; };
+		9F2461DB2984CF950060574F /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461DA2984CF950060574F /* ChartView.swift */; };
 		9FB75A8C2982B65B00759F0F /* eADetectorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB75A8B2982B65B00759F0F /* eADetectorApp.swift */; };
 		9FB75A8E2982B65B00759F0F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB75A8D2982B65B00759F0F /* ContentView.swift */; };
 		9FB75A902982B65C00759F0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FB75A8F2982B65C00759F0F /* Assets.xcassets */; };
@@ -37,6 +45,14 @@
 		9F2461C4298445400060574F /* DashBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardView.swift; sourceTree = "<group>"; };
 		9F2461C62984460E0060574F /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		9F2461C8298446250060574F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		9F2461CB298458EF0060574F /* HealthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
+		9F2461CD2984A2A70060574F /* styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = styles.swift; sourceTree = "<group>"; };
+		9F2461CF2984B3650060574F /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
+		9F2461D22984B4030060574F /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		9F2461D42984C5340060574F /* HealthStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStat.swift; sourceTree = "<group>"; };
+		9F2461D62984C57E0060574F /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
+		9F2461D82984C81A0060574F /* ActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewModel.swift; sourceTree = "<group>"; };
+		9F2461DA2984CF950060574F /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		9FB75A882982B65B00759F0F /* eADetector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eADetector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FB75A8B2982B65B00759F0F /* eADetectorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eADetectorApp.swift; sourceTree = "<group>"; };
 		9FB75A8D2982B65B00759F0F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -102,6 +118,27 @@
 			path = tabs;
 			sourceTree = "<group>";
 		};
+		9F2461CA298458DE0060574F /* healthKit */ = {
+			isa = PBXGroup;
+			children = (
+				9F2461CB298458EF0060574F /* HealthStore.swift */,
+				9F2461CF2984B3650060574F /* Step.swift */,
+				9F2461D42984C5340060574F /* HealthStat.swift */,
+				9F2461D62984C57E0060574F /* Activity.swift */,
+			);
+			path = healthKit;
+			sourceTree = "<group>";
+		};
+		9F2461D12984B3EF0060574F /* components */ = {
+			isa = PBXGroup;
+			children = (
+				9F2461D22984B4030060574F /* ActivityView.swift */,
+				9F2461D82984C81A0060574F /* ActivityViewModel.swift */,
+				9F2461DA2984CF950060574F /* ChartView.swift */,
+			);
+			path = components;
+			sourceTree = "<group>";
+		};
 		9FB75A7F2982B65B00759F0F = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +159,8 @@
 		9FB75A8A2982B65B00759F0F /* eADetector */ = {
 			isa = PBXGroup;
 			children = (
+				9F2461D12984B3EF0060574F /* components */,
+				9F2461CA298458DE0060574F /* healthKit */,
 				9F2461C32984452E0060574F /* tabs */,
 				9F2461C2298433720060574F /* authViews */,
 				9F2461BB2984229A0060574F /* utils */,
@@ -131,6 +170,7 @@
 				9FB75A8F2982B65C00759F0F /* Assets.xcassets */,
 				9FB75A912982B65C00759F0F /* eADetector.entitlements */,
 				9FB75A922982B65C00759F0F /* Preview Content */,
+				9F2461CD2984A2A70060574F /* styles.swift */,
 			);
 			path = eADetector;
 			sourceTree = "<group>";
@@ -229,13 +269,21 @@
 				9FB75A9B2982BBD900759F0F /* LoginView.swift in Sources */,
 				9F2461C5298445400060574F /* DashBoardView.swift in Sources */,
 				9F2461BF298430E30060574F /* ConfirmationView.swift in Sources */,
+				9F2461CE2984A2A70060574F /* styles.swift in Sources */,
 				9F2461BD298422A70060574F /* auth.swift in Sources */,
+				9F2461DB2984CF950060574F /* ChartView.swift in Sources */,
 				9F2461C72984460E0060574F /* StatisticsView.swift in Sources */,
+				9F2461D72984C57E0060574F /* Activity.swift in Sources */,
 				9F2461C9298446250060574F /* SettingsView.swift in Sources */,
 				9F2461C1298431520060574F /* SignUpView.swift in Sources */,
+				9F2461D92984C81A0060574F /* ActivityViewModel.swift in Sources */,
+				9F2461D52984C5340060574F /* HealthStat.swift in Sources */,
 				9FB75A9D2982BFFE00759F0F /* MainView.swift in Sources */,
+				9F2461D32984B4030060574F /* ActivityView.swift in Sources */,
 				9FB75A8E2982B65B00759F0F /* ContentView.swift in Sources */,
 				9FB75A8C2982B65B00759F0F /* eADetectorApp.swift in Sources */,
+				9F2461D02984B3650060574F /* Step.swift in Sources */,
+				9F2461CC298458EF0060574F /* HealthStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,6 +412,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Access to health records";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Access to health records";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -402,6 +452,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Access to health records";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Access to health records";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

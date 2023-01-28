@@ -15,18 +15,18 @@ struct ConfirmationView: View {
     
     var body: some View {
         VStack {
-            TextField("Verification Code", text: $verificationCode)
+            TextField("Verification Code", text: $verificationCode).textFieldStyle(RoundedBorderTextFieldStyle()).padding(.horizontal, 10)
             HStack {
                 Button("Enter", action: {
                     Task {
                         await authSessionManager.confirmSignUp(for: username, with: verificationCode)
                     }
-                })
+                }).withActionButtonStyles()
                 Button("Resend", action: {
                     Task {
                         await authSessionManager.resendVerificationCode(username: username)
                     }
-                })
+                }).buttonStyle(.bordered)
             }
         }
     }

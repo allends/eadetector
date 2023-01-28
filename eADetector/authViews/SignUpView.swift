@@ -22,7 +22,7 @@ struct SignUpView: View {
                     Task {
                         await authSessionManager.signUp(username: email, password: password, email: email)
                     }
-                })
+                }).withActionButtonStyles()
                 Button("Log In", action: {
                     authSessionManager.showLogin()
                 })

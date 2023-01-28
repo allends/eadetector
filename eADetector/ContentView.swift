@@ -11,6 +11,7 @@ import Amplify
 struct ContentView: View {
     
     @EnvironmentObject var authSessionManager: AuthSessionManager
+    @EnvironmentObject var healthStore: HealthStore
     let user: User
     
     var body: some View {

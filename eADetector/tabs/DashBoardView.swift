@@ -6,14 +6,28 @@
 //
 
 import SwiftUI
+import HealthKit
+import Charts
 
 struct DashBoardView: View {
     
+    @EnvironmentObject var healthStore: HealthStore
     let user: User
+    let activity = Activity(id: "activeEnergyBurned", name: "Active Burned Calories", image: "⚡️")
+    // TODO: load the user data and display a graph
     
     var body: some View {
         VStack {
-            Text("Hello, \(user.email)")
+            HStack {
+                Text("Hello, \(user.email)").withTitleStyles()
+                Spacer()
+            }
+            
+            Spacer()
+            VStack {
+                ActivityView(activity: activity, repository: healthStore)
+                Text(activity.name)
+            }
             Spacer()
         }
     }
