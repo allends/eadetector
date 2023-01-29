@@ -10,6 +10,7 @@ import SwiftUI
 struct StatisticsView: View {
     
     @EnvironmentObject var healthStore: HealthStore
+    @State var selectedStatistic: Activity = Activity(id: "activeEnergyBurned", name: "Active Burned Calories", image: "⚡️")
     // TODO: make a drop to switch between data
     // TODO: make a date picker to choose data range
     // TODO: display data via a graph
@@ -21,22 +22,21 @@ struct StatisticsView: View {
                 Spacer()
             }
             Spacer()
-            ScrollView {
+            Picker("Pick statistic", selection: $selectedStatistic) {
                 ForEach(Activity.allActivities()) { activity in
-                    VStack {
-                        ActivityView(activity: activity, repository: healthStore)
-                        Text(activity.name)
-                    }
+                    Text(activity.name).tag(activity)
                 }
             }
+            ActivityView(activity: selectedStatistic, repository: healthStore)
+            Text(selectedStatistic.name)
             Spacer()
         }
         
     }
 }
 
-struct StatisticsView_Previews: PreviewProvider {
-    static var previews: some View {
-        StatisticsView()
-    }
-}
+//struct StatisticsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        StatisticsView()
+//    }
+//}
