@@ -11,23 +11,33 @@ import Amplify
 struct SignUpView: View {
     @EnvironmentObject var authSessionManager: AuthSessionManager
     @State private var email = ""
+    @State private var firstName = ""
+    @State private var lastName = ""
     @State private var password = ""
     
     var body: some View {
         VStack {
-            TextField("Email", text: $email).textFieldStyle(RoundedBorderTextFieldStyle()).padding(.horizontal, 10)
-            TextField("Password", text: $password).textFieldStyle(RoundedBorderTextFieldStyle()).padding(.horizontal, 10)
+            Text("Sign up").font(.largeTitle).padding(.top, 10)
+            Spacer()
+            TextField("Email", text: $email).textFieldStyle(RoundedBorderTextFieldStyle())
             HStack {
-                Button("Sign Up", action: {
-                    Task {
-                        await authSessionManager.signUp(username: email, password: password, email: email)
-                    }
-                }).withActionButtonStyles()
+                TextField("First name", text: $firstName).textFieldStyle(.roundedBorder)
+                TextField("Last name", text: $lastName).textFieldStyle(.roundedBorder)
+            }
+            TextField("Password", text: $password).textFieldStyle(RoundedBorderTextFieldStyle())
+            HStack {
                 Button("Log In", action: {
                     authSessionManager.showLogin()
                 })
+                Spacer()
+                Button("Sign Up", action: {
+                    Task {
+                        await authSessionManager.signUp(username: email, password: password, email: email, firstName: firstName, lastName: lastName)
+                    }
+                }).withActionButtonStyles()
             }
-        }
+            Spacer()
+        }.padding(.all, 20)
     }
 }
 

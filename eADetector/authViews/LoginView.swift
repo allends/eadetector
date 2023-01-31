@@ -16,19 +16,23 @@ struct LoginView: View {
     
     var body: some View {
         VStack {
-            TextField("Email", text: $email).textFieldStyle(RoundedBorderTextFieldStyle()).padding(.horizontal, 10)
-            TextField("Password", text: $password).textFieldStyle(RoundedBorderTextFieldStyle()).padding(.horizontal, 10)
+            Text("Welcome to eADetector").font(.largeTitle).padding(.top, 10)
+            Spacer()
+            TextField("Email", text: $email).textFieldStyle(RoundedBorderTextFieldStyle())
+            TextField("Password", text: $password).textFieldStyle(RoundedBorderTextFieldStyle())
             HStack {
+                Button("Sign Up", action: {
+                    authSessionManager.showSignUp()
+                })
+                Spacer()
                 Button("Login", action: {
                     Task {
                         await authSessionManager.signIn(username: email, password: password)
                     }
                 }).withActionButtonStyles()
-                Button("Sign Up", action: {
-                    authSessionManager.showSignUp()
-                })
             }
-        }
+            Spacer()
+        }.padding(.all, 20)
     }
 }
 

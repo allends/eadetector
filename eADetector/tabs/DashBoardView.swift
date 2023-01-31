@@ -19,7 +19,7 @@ struct DashBoardView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("Hello, \(user.email)").withTitleStyles()
+                Text("Hello, \(user.firstName)").withTitleStyles()
                 Spacer()
             }
             

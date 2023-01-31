@@ -12,10 +12,14 @@ import AWSCognitoAuthPlugin
 class User {
     var email: String
     var authUser: AuthUser
+    var firstName: String
+    var lastName: String
     
-    init(email: String, authUser: AuthUser) {
+    init(email: String, authUser: AuthUser, firstName: String, lastName: String) {
         self.email = email
         self.authUser = authUser
+        self.firstName = firstName
+        self.lastName = lastName
     }
 }
 
@@ -51,8 +55,8 @@ final class AuthSessionManager: ObservableObject {
         authState = .login
     }
     
-    func signUp(username: String, password: String, email: String) async {
-        let userAttributes = [AuthUserAttribute(.email, value: email)]
+    func signUp(username: String, password: String, email: String, firstName: String, lastName: String) async {
+        let userAttributes = [AuthUserAttribute(.email, value: email), AuthUserAttribute(.custom("firstName"), value: firstName), AuthUserAttribute(.custom("lastName"), value: lastName)]
         let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
         do {
             let signUpResult = try await Amplify.Auth.signUp(
@@ -146,7 +150,10 @@ final class AuthSessionManager: ObservableObject {
                 let user = try await Amplify.Auth.getCurrentUser()
                 let userAtt = try await Amplify.Auth.fetchUserAttributes()
                 // load the email from the user attributes field
-                let currentUser = User(email: userAtt.first(where: { $0.value.contains("@")})?.value ?? "", authUser: user)
+                print(userAtt)
+                let firstName = userAtt.first(where: { $0.key == .custom("firstName") })?.value ?? ""
+                let lastName = userAtt.first(where: { $0.key == .custom("lastName") })?.value ?? ""
+                let currentUser = User(email: userAtt.first(where: { $0.value.contains("@")})?.value ?? "", authUser: user, firstName: firstName, lastName: lastName)
                 DispatchQueue.main.async {
                     self.authState = .session(user: currentUser)
                 }

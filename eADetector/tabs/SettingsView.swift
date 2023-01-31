@@ -23,7 +23,6 @@ struct SettingsView: View {
                 Text("Settings").withTitleStyles()
                 Spacer()
             }
-            
             Spacer()
             Button("Sign out", action: {
                 Task {
