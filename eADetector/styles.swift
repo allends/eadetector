@@ -24,3 +24,12 @@ extension Text {
         self.font(.title).fontWeight(.bold).padding(20)
     }
 }
+
+extension TextField {
+    func withTextFieldStyles() -> some View {
+        self.textFieldStyle(.roundedBorder)
+            .padding(10)
+            .padding(.horizontal, 20)
+            .cornerRadius(10)
+    }
+}

@@ -1,15 +1,15 @@
 //
-//  GraphView.swift
+//  ActivityFullView.swift
 //  eADetector
 //
-//  Created by Allen Davis-Swing on 1/27/23.
+//  Created by Allen Davis-Swing on 3/3/23.
 //
 
 import SwiftUI
 import HealthKit
 import SwiftUICharts
 
-struct ActivityView: View {
+struct ActivityFullView: View {
     let formFactor: CGSize
     var activity: Activity
     var repository: HealthStore
@@ -31,6 +31,6 @@ struct ActivityView: View {
     }()
     
     var body: some View {
-        BarChartView(data: ChartData(values: viewModel.stats.map {(viewModel.value(from: $0.stat).desc, viewModel.value(from: $0.stat).value)}), title: activity.name, form: formFactor)
+        LineView(data: viewModel.stats.map { Double(viewModel.value(from: $0.stat).value)}, title: activity.name)
     }
 }

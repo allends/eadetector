@@ -7,34 +7,33 @@
 
 import SwiftUI
 import HealthKit
-import Charts
+import SwiftUICharts
 
 struct DashBoardView: View {
     
     @EnvironmentObject var healthStore: HealthStore
     let user: User
     let activity = Activity(id: "activeEnergyBurned", name: "Active Burned Calories", image: "⚡️")
-    // TODO: load the user data and display a graph
-    
+    let steps = Activity(id: "stepCount", name: "Step Count", image: "👣")
+    let distance = Activity(id: "distanceWalkingRunning", name: "Distance Walking/Running", image: "🏃🏻‍♀️")
+        
     var body: some View {
-        VStack {
-            HStack {
-                Text("Hello, \(user.firstName)").withTitleStyles()
-                Spacer()
-            }
-            
-            Spacer()
+        NavigationView {
             VStack {
-                ActivityView(activity: activity, repository: healthStore)
-                Text(activity.name)
-            }
-            Spacer()
+                Spacer()
+                VStack {
+                    ActivityView(activity: activity, repository: healthStore, formFactor: ChartForm.extraLarge)
+                    HStack {
+                        VStack {
+                            ActivityView(activity: steps, repository: healthStore, formFactor: ChartForm.medium)
+                        }
+                        VStack {
+                            ActivityView(activity: distance, repository: healthStore, formFactor: ChartForm.medium)
+                        }
+                    }
+                }
+                Spacer()
+            }.navigationTitle("Hello, \(user.firstName)").backgroundStyle(.background)
         }
     }
 }
-
-//struct DashBoardView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DashBoardView()
-//    }
-//}
