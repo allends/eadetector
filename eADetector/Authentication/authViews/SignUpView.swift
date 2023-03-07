@@ -19,12 +19,12 @@ struct SignUpView: View {
         VStack {
             Text("Sign up").font(.largeTitle).padding(.top, 10)
             Spacer()
-            TextField("Email", text: $email).textFieldStyle(RoundedBorderTextFieldStyle())
+            TextField("Email", text: $email).textFieldStyle(RoundedBorderTextFieldStyle()).autocapitalization(.none)
             HStack {
                 TextField("First name", text: $firstName).textFieldStyle(.roundedBorder)
                 TextField("Last name", text: $lastName).textFieldStyle(.roundedBorder)
             }
-            TextField("Password", text: $password).textFieldStyle(RoundedBorderTextFieldStyle())
+            SecureField("Password", text: $password).textFieldStyle(RoundedBorderTextFieldStyle())
             HStack {
                 Button("Log In", action: {
                     authSessionManager.showLogin()

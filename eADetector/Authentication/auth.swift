@@ -169,6 +169,29 @@ final class AuthSessionManager: ObservableObject {
         }
     }
     
+    // TODO do some error handling on the result of the update
+    func updateFirstName(firstName: String) async {
+        do {
+            let _result = try await Amplify.Auth.update(userAttribute: AuthUserAttribute(.custom("firstName"), value: firstName))
+            await fetchCurrentAuthSession()
+        } catch let error as AuthError {
+            print("An error occurred while registering a user \(error)")
+        } catch {
+            print("Unexpected error: \(error)")
+        }
+    }
+    
+    func updateLastName(lastName: String) async {
+        do {
+            let _result = try await Amplify.Auth.update(userAttribute: AuthUserAttribute(.custom("lastName"), value: lastName))
+            await fetchCurrentAuthSession()
+        } catch let error as AuthError {
+            print("An error occurred while registering a user \(error)")
+        } catch {
+            print("Unexpected error: \(error)")
+        }
+    }
+    
 }
 
 

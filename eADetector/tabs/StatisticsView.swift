@@ -6,37 +6,28 @@
 //
 
 import SwiftUI
+import SwiftUICharts
 
 struct StatisticsView: View {
     
     @EnvironmentObject var healthStore: HealthStore
     @State var selectedStatistic: Activity = Activity(id: "activeEnergyBurned", name: "Active Burned Calories", image: "⚡️")
-    // TODO: make a drop to switch between data
     // TODO: make a date picker to choose data range
-    // TODO: display data via a graph
     
     var body: some View {
-        VStack {
-            HStack {
-                Text("Statistics").withTitleStyles()
+        NavigationView {
+            VStack {
                 Spacer()
-            }
-            Spacer()
-            Picker("Pick statistic", selection: $selectedStatistic) {
-                ForEach(Activity.allActivities()) { activity in
-                    Text(activity.name).tag(activity)
+                Picker("Pick statistic", selection: $selectedStatistic) {
+                    ForEach(Activity.allActivities()) { activity in
+                        Text(activity.name).tag(activity)
+                    }
                 }
-            }
-            ActivityView(activity: selectedStatistic, repository: healthStore)
-            Text(selectedStatistic.name)
-            Spacer()
+                ActivityFullView(activity: selectedStatistic, repository: healthStore, formFactor: ChartForm.extraLarge).padding(10)
+                NavigationLink("More", destination: MetricDetail(activity: selectedStatistic))
+                Spacer()
+            }.navigationTitle("Statistics")
         }
         
     }
 }
-
-//struct StatisticsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        StatisticsView()
-//    }
-//}

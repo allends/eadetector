@@ -18,8 +18,8 @@ struct LoginView: View {
         VStack {
             Text("Welcome to eADetector").font(.largeTitle).padding(.top, 10)
             Spacer()
-            TextField("Email", text: $email).textFieldStyle(RoundedBorderTextFieldStyle())
-            TextField("Password", text: $password).textFieldStyle(RoundedBorderTextFieldStyle())
+            TextField("Email", text: $email).textFieldStyle(RoundedBorderTextFieldStyle()).autocapitalization(.none).autocorrectionDisabled(true)
+            SecureField("Password", text: $password).textFieldStyle(RoundedBorderTextFieldStyle())
             HStack {
                 Button("Sign Up", action: {
                     authSessionManager.showSignUp()
