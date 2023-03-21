@@ -19,6 +19,7 @@ struct AgeStep: View {
             TextField("age", text: Binding(get: { String(age)}, set: {age = Int($0) ?? 0})).withTextFieldStyles().keyboardType(.numberPad).focused($ageIsFouced)
             Button(action: {
                 self.ageIsFouced = false
+                print(onBoardingIndex)
                 self.onBoardingIndex = onBoardingIndex + 1
             }) {
                 Text("Okay!")

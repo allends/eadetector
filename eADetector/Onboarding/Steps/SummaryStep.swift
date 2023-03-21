@@ -13,6 +13,7 @@ struct SummaryStep: View {
     @Binding var showOnboarding: Bool
     @Binding var familyRisk: String
     @Binding var age: Int
+    @EnvironmentObject var authSessionManager: AuthSessionManager
     
     var body: some View {
         VStack {

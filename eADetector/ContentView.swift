@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Amplify
 
 struct ContentView: View {
     

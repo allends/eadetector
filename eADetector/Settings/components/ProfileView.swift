@@ -10,8 +10,7 @@ import SwiftUI
 struct ProfileView: View {
     
     let user: User
-    @State private var firstName = ""
-    @State private var lastName = ""
+    @State private var name = ""
     @EnvironmentObject var authSessionManager: AuthSessionManager
     @Environment(\.presentationMode) var presentation
 
@@ -19,17 +18,12 @@ struct ProfileView: View {
     
     init(user: User) {
             self.user = user
-            _firstName = State(initialValue: user.firstName)
-            _lastName = State(initialValue: user.lastName)
+            _name = State(initialValue: user.firstName)
         }
     
     var body: some View {
         VStack {
-            TextField("First Name", text: $firstName)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-            
-            TextField("Last Name", text: $lastName)
+            TextField("First Name", text: $name)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
             
@@ -48,20 +42,7 @@ struct ProfileView: View {
     }
     
     func saveChanges() {
-        Task {
-            if (firstName != user.firstName) {
-                await authSessionManager.updateFirstName(firstName: firstName)
-            }
-            if (lastName != user.lastName) {
-                await authSessionManager.updateLastName(lastName: lastName)
-            }
-            
-            if (firstName != user.firstName || lastName != user.lastName) {
-                self.presentation.wrappedValue.dismiss()
-            } else {
-                showingAlert = true
-            }
-        }
+        authSessionManager.updateName(name: name)
     }
 }
 

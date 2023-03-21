@@ -20,7 +20,7 @@ struct Onboarding: View {
             InfoStep(onBoardingIndex: $onBoardingIndex).tag(0)
             AgeStep(onBoardingIndex: $onBoardingIndex, age: $age).tag(1)
             FamilyHistoryStep(onBoardingIndex: $onBoardingIndex, familyHistorySelection: $familyHistorySelection).tag(2)
-            SummaryStep(onBoardingIndex: $onBoardingIndex, showOnboarding: $showOnboarding, familyRisk: $familyHistorySelection, age: $age).tag(2)
+            SummaryStep(onBoardingIndex: $onBoardingIndex, showOnboarding: $showOnboarding, familyRisk: $familyHistorySelection, age: $age).tag(3)
         }.tabViewStyle(.page).indexViewStyle(.page(backgroundDisplayMode: .always)).animation(.easeInOut, value: onBoardingIndex)
     }
 }

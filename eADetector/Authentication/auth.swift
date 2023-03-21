@@ -6,21 +6,20 @@
 //
 
 import Foundation
-import Amplify
-import AWSCognitoAuthPlugin
-import AWSS3StoragePlugin
+import Firebase
+import FirebaseCore
 
 class User {
     var email: String
-    var authUser: AuthUser
     var firstName: String
     var lastName: String
+    var showOnboarding: Bool
     
-    init(email: String, authUser: AuthUser, firstName: String, lastName: String) {
+    init(email: String, firstName: String, lastName: String) {
         self.email = email
-        self.authUser = authUser
         self.firstName = firstName
         self.lastName = lastName
+        self.showOnboarding = true
     }
 }
 
@@ -28,7 +27,7 @@ enum AuthState {
     case signUp
     case login
     case confirmCode(username: String)
-    case session(user:User)
+    case session(user: User)
 }
 
 final class AuthSessionManager: ObservableObject {
@@ -36,17 +35,12 @@ final class AuthSessionManager: ObservableObject {
     @Published var authState: AuthState = .login
     
     init() {
-        do {
-            try Amplify.add(plugin: AWSCognitoAuthPlugin())
-            try Amplify.add(plugin: AWSS3StoragePlugin())
-            try Amplify.configure()
-            print("Amplify configured with auth plugin")
-            
-        } catch {
-            print("Failed to initialize Amplify with \(error)")
-        }
-        Task(priority: .low) {
-            await fetchCurrentAuthSession()
+        FirebaseApp.configure()
+        Auth.auth().addStateDidChangeListener { auth, user in
+            if user != nil {
+                let newUser = User(email: user?.email ?? "", firstName: user?.displayName ?? "", lastName: user?.displayName ?? "")
+                self.authState = .session(user: newUser)
+            }
         }
     }
     
@@ -58,148 +52,69 @@ final class AuthSessionManager: ObservableObject {
         authState = .login
     }
     
-    func signUp(username: String, password: String, email: String, firstName: String, lastName: String) async {
-        let userAttributes = [AuthUserAttribute(.email, value: email), AuthUserAttribute(.custom("firstName"), value: firstName), AuthUserAttribute(.custom("lastName"), value: lastName)]
-        let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
-        do {
-            let signUpResult = try await Amplify.Auth.signUp(
-                username: username,
-                password: password,
-                options: options
-            )
-            if case let .confirmUser(deliveryDetails, _, userId) = signUpResult.nextStep {
-                print("Delivery details \(String(describing: deliveryDetails)) for userId: \(String(describing: userId))")
-                authState = .confirmCode(username: username)
+    func signUp(username: String, password: String, email: String, firstName: String, lastName: String) {
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+            if error != nil {
+                print(error!.localizedDescription)
             } else {
-                print("SignUp Complete")
+                print(authResult)
             }
-        } catch let error as AuthError {
-            print("An error occurred while registering a user \(error)")
-        } catch {
-            print("Unexpected error: \(error)")
         }
+        showLogin()
     }
     
     func resendVerificationCode(username: String) async {
-        do {
-            let _resendResult = try await Amplify.Auth.resendSignUpCode(for: username)
 
-        } catch let error as AuthError {
-            print("An error occurred while registering a user \(error)")
-        } catch {
-            print("Unexpected error: \(error)")
-        }
     }
 
     func confirmSignUp(for username: String, with confirmationCode: String) async {
-        do {
-            let confirmSignUpResult = try await Amplify.Auth.confirmSignUp(
-                for: username,
-                confirmationCode: confirmationCode
-            )
-            print("Confirm sign up result completed: \(confirmSignUpResult.isSignUpComplete)")
-            Task {
-                await fetchCurrentAuthSession()
-            }
-        } catch let error as AuthError {
-            print("An error occurred while confirming sign up \(error)")
-        } catch {
-            print("Unexpected error: \(error)")
-        }
     }
 
-    func signIn(username: String, password: String) async {
-        do {
-            let signInResult = try await Amplify.Auth.signIn(
-                username: username,
-                password: password
-                )
-            if signInResult.isSignedIn {
-                print("Sign in succeeded")
-                upload()
-            }
-            Task {
-                await fetchCurrentAuthSession()
-            }
-        } catch let error as AuthError {
-            print("Sign in failed \(error)")
-        } catch {
-            print("Unexpected error: \(error)")
+    func signIn(username: String, password: String) {
+        Auth.auth().signIn(withEmail: username, password: password) { [weak self] authResult, error in
+          guard let strongSelf = self else { return }
+            print(authResult?.user)
+          // ...
         }
     }
     
-    func signOut() async {
-        let result = await Amplify.Auth.signOut()
-        guard let signOutResult = result as? AWSCognitoSignOutResult
-        else {
-            print("Signout failed")
-            return
-        }
-        switch signOutResult {
-            case .complete:
-                await fetchCurrentAuthSession()
-            case .failed(let error):
-                print("Sign out ERROR ", error)
-            default:
-                print("error")
+    func signOut() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            showLogin()
+        } catch let signOutError as NSError {
+          print("Error signing out: %@", signOutError)
         }
     }
 
     func fetchCurrentAuthSession() async {
-        do {
-            let session = try await Amplify.Auth.fetchAuthSession()
-            print("\(session)")
-            print("Is user signed in - \(session.isSignedIn)")
-            if (session.isSignedIn) {
-                let user = try await Amplify.Auth.getCurrentUser()
-                let userAtt = try await Amplify.Auth.fetchUserAttributes()
-                // load the email from the user attributes field
-                print(userAtt)
-                let firstName = userAtt.first(where: { $0.key == .custom("firstName") })?.value ?? ""
-                let lastName = userAtt.first(where: { $0.key == .custom("lastName") })?.value ?? ""
-                let currentUser = User(email: userAtt.first(where: { $0.value.contains("@")})?.value ?? "", authUser: user, firstName: firstName, lastName: lastName)
-                DispatchQueue.main.async {
-                    self.authState = .session(user: currentUser)
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.authState = .login
-                }
-            }
-        } catch let error as AuthError {
-            print("Fetch session failed with error \(error)")
-        } catch {
-            print("Unexpected error: \(error)")
+
+    }
+    
+    func updateName(name: String) {
+        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+        changeRequest?.displayName = name
+        changeRequest?.commitChanges { error in
+          // ...
         }
     }
     
     // TODO do some error handling on the result of the update
     func updateFirstName(firstName: String) async {
-        do {
-            let _result = try await Amplify.Auth.update(userAttribute: AuthUserAttribute(.custom("firstName"), value: firstName))
-            await fetchCurrentAuthSession()
-        } catch let error as AuthError {
-            print("An error occurred while registering a user \(error)")
-        } catch {
-            print("Unexpected error: \(error)")
-        }
+
     }
     
     func updateLastName(lastName: String) async {
-        do {
-            let _result = try await Amplify.Auth.update(userAttribute: AuthUserAttribute(.custom("lastName"), value: lastName))
-            await fetchCurrentAuthSession()
-        } catch let error as AuthError {
-            print("An error occurred while registering a user \(error)")
-        } catch {
-            print("Unexpected error: \(error)")
-        }
+
+    }
+    
+    func checkOnboarding () async {
+
     }
 
     func upload() {
-        let dataString = "Example file contents"
-        let data = Data(dataString.utf8)
-        Amplify.Storage.uploadData(key: "yo", data: data)
+
     }
     
 }

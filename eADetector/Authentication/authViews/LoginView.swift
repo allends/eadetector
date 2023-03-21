@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Amplify
 
 struct LoginView: View {
     
@@ -26,9 +25,7 @@ struct LoginView: View {
                 })
                 Spacer()
                 Button("Login", action: {
-                    Task {
-                        await authSessionManager.signIn(username: email, password: password)
-                    }
+                    authSessionManager.signIn(username: email, password: password)
                 }).withActionButtonStyles()
             }
             Spacer()

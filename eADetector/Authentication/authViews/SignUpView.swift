@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Amplify
 
 struct SignUpView: View {
     @EnvironmentObject var authSessionManager: AuthSessionManager
@@ -31,9 +30,7 @@ struct SignUpView: View {
                 })
                 Spacer()
                 Button("Sign Up", action: {
-                    Task {
-                        await authSessionManager.signUp(username: email, password: password, email: email, firstName: firstName, lastName: lastName)
-                    }
+                    authSessionManager.signUp(username: email, password: password, email: email, firstName: firstName, lastName: lastName)
                 }).withActionButtonStyles()
             }
             Spacer()

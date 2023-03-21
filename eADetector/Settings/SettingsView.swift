@@ -24,9 +24,7 @@ struct SettingsView: View {
                 NavigationLink("Profile", destination: ProfileView(user: user))
                 NavigationLink("Legal Info", destination: Text("Legal stuff placeholder"))
                 Button("Sign out", action: {
-                    Task {
-                        await authSessionManager.signOut()
-                    }
+                        authSessionManager.signOut()
                 }).buttonStyle(.bordered)
                 Button("Request healthkit access", action: {
                     healthStore.requestAuthorization { success in

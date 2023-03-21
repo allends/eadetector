@@ -25,6 +25,7 @@ struct FamilyHistoryStep: View {
                 }
             }.pickerStyle(.menu)
             Button(action: {
+                print(onBoardingIndex)
                 self.onBoardingIndex = onBoardingIndex + 1
             }) {
                 Text("Okay!")

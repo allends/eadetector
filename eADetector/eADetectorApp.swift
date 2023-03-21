@@ -6,8 +6,7 @@
 //
 
 import SwiftUI
-import Amplify
-import AWSCognitoAuthPlugin
+import Firebase
 
 @main
 struct eADetectorApp: App {
