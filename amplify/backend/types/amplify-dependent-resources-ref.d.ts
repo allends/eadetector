@@ -6,15 +6,10 @@ export type AmplifyDependentResourcesAttributes = {
       "GraphQLAPIKeyOutput": "string"
     }
   },
-  "auth": {
-    "eadetectorbe82b606": {
-      "AppClientID": "string",
-      "AppClientIDWeb": "string",
-      "IdentityPoolId": "string",
-      "IdentityPoolName": "string",
-      "UserPoolArn": "string",
-      "UserPoolId": "string",
-      "UserPoolName": "string"
+  "storage": {
+    "s3f16cc99f": {
+      "BucketName": "string",
+      "Region": "string"
     }
   }
 }

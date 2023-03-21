@@ -8,6 +8,7 @@
 import Foundation
 import Amplify
 import AWSCognitoAuthPlugin
+import AWSS3StoragePlugin
 
 class User {
     var email: String
@@ -37,8 +38,10 @@ final class AuthSessionManager: ObservableObject {
     init() {
         do {
             try Amplify.add(plugin: AWSCognitoAuthPlugin())
+            try Amplify.add(plugin: AWSS3StoragePlugin())
             try Amplify.configure()
             print("Amplify configured with auth plugin")
+            
         } catch {
             print("Failed to initialize Amplify with \(error)")
         }
@@ -113,6 +116,7 @@ final class AuthSessionManager: ObservableObject {
                 )
             if signInResult.isSignedIn {
                 print("Sign in succeeded")
+                upload()
             }
             Task {
                 await fetchCurrentAuthSession()
@@ -191,9 +195,11 @@ final class AuthSessionManager: ObservableObject {
             print("Unexpected error: \(error)")
         }
     }
+
+    func upload() {
+        let dataString = "Example file contents"
+        let data = Data(dataString.utf8)
+        Amplify.Storage.uploadData(key: "yo", data: data)
+    }
     
 }
-
-
-
-
