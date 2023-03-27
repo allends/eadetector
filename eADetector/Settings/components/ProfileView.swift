@@ -9,17 +9,11 @@ import SwiftUI
 
 struct ProfileView: View {
     
-    let user: User
     @State private var name = ""
     @EnvironmentObject var authSessionManager: AuthSessionManager
     @Environment(\.presentationMode) var presentation
 
     @State private var showingAlert = false
-    
-    init(user: User) {
-            self.user = user
-            _name = State(initialValue: user.firstName)
-        }
     
     var body: some View {
         VStack {
@@ -42,7 +36,9 @@ struct ProfileView: View {
     }
     
     func saveChanges() {
-        authSessionManager.updateName(name: name)
+        Task {
+            await authSessionManager.updateFirstName(firstName: name)
+        }
     }
 }
 

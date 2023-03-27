@@ -9,37 +9,30 @@ import Foundation
 import Firebase
 import FirebaseCore
 
-class User {
-    var email: String
-    var firstName: String
-    var lastName: String
-    var showOnboarding: Bool
-    
-    init(email: String, firstName: String, lastName: String) {
-        self.email = email
-        self.firstName = firstName
-        self.lastName = lastName
-        self.showOnboarding = true
-    }
-}
-
 enum AuthState {
     case signUp
     case login
-    case confirmCode(username: String)
-    case session(user: User)
+    case session(user: FirebaseAuth.User)
+}
+
+struct UserInfo {
+    let first: String
+    let last: String
+    let email: String
 }
 
 final class AuthSessionManager: ObservableObject {
     
     @Published var authState: AuthState = .login
+    @Published var db: Firestore
+    @Published var user: UserInfo?
     
     init() {
         FirebaseApp.configure()
+        db = Firestore.firestore()
         Auth.auth().addStateDidChangeListener { auth, user in
             if user != nil {
-                let newUser = User(email: user?.email ?? "", firstName: user?.displayName ?? "", lastName: user?.displayName ?? "")
-                self.authState = .session(user: newUser)
+                self.authState = .session(user: user!)
             }
         }
     }
@@ -57,24 +50,23 @@ final class AuthSessionManager: ObservableObject {
             if error != nil {
                 print(error!.localizedDescription)
             } else {
-                print(authResult)
+                print(authResult?.user.uid)
+                // Create a user with the uid as the document title when they sign up
+                self.db.collection("users").document(authResult?.user.uid ?? "error").setData([
+                    "first": firstName,
+                    "last": lastName,
+                    "email": email
+                ])
             }
         }
         showLogin()
-    }
-    
-    func resendVerificationCode(username: String) async {
-
-    }
-
-    func confirmSignUp(for username: String, with confirmationCode: String) async {
     }
 
     func signIn(username: String, password: String) {
         Auth.auth().signIn(withEmail: username, password: password) { [weak self] authResult, error in
           guard let strongSelf = self else { return }
             print(authResult?.user)
-          // ...
+            self?.fetchCurrentAuthSession()
         }
     }
     
@@ -88,8 +80,24 @@ final class AuthSessionManager: ObservableObject {
         }
     }
 
-    func fetchCurrentAuthSession() async {
+    func fetchCurrentAuthSession() {
+        guard let user = Auth.auth().currentUser else { return }
+        let userRef = db.collection("users").document(user.uid)
+        userRef.getDocument { (document, error) in
+                guard error == nil else {
+                    print("error", error ?? "")
+                    return
+                }
 
+                if let document = document, document.exists {
+                    let data = document.data()
+                    if let data = data {
+                        print("data", data)
+                        let newUser = UserInfo(first: data["first"] as? String ?? "", last: data["last"] as? String ?? "", email: data["email"] as? String ?? "")
+                        self.user = newUser
+                    }
+                }
+            }
     }
     
     func updateName(name: String) {
@@ -102,7 +110,21 @@ final class AuthSessionManager: ObservableObject {
     
     // TODO do some error handling on the result of the update
     func updateFirstName(firstName: String) async {
-
+        if case let .session(user) = authState {
+            print("we have a user")
+            do {
+                try await db.collection("users").document(user.uid).setData([
+                    "first": firstName
+                ], merge: true)
+                fetchCurrentAuthSession()
+            } catch {
+                print("error occured")
+            }
+        } else {
+            return
+        }
+        
+        
     }
     
     func updateLastName(lastName: String) async {

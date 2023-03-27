@@ -12,16 +12,14 @@ struct SettingsView: View {
     
     @EnvironmentObject var authSessionManager: AuthSessionManager
     @EnvironmentObject var healthStore: HealthStore
-    
-    let user: User
-    
+        
     // TODO: make it such that we can push notifications
     // TODO: make it such that we can view legal information
     
     var body: some View {
         NavigationView() {
             List {
-                NavigationLink("Profile", destination: ProfileView(user: user))
+                NavigationLink("Profile", destination: ProfileView())
                 NavigationLink("Legal Info", destination: Text("Legal stuff placeholder"))
                 Button("Sign out", action: {
                         authSessionManager.signOut()

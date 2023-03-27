@@ -11,7 +11,6 @@ struct ContentView: View {
     
     @EnvironmentObject var authSessionManager: AuthSessionManager
     @EnvironmentObject var healthStore: HealthStore
-    let user: User
     @State var showOnboarding: Bool = true
     @State var onBoardingIndex = 0
     
@@ -19,7 +18,7 @@ struct ContentView: View {
         VStack {
             if (!showOnboarding) {
             TabView {
-                DashBoardView(user: user)
+                DashBoardView()
                     .tabItem {
                         Label("Dashboard", systemImage: "house")
                     }
@@ -27,7 +26,7 @@ struct ContentView: View {
                     .tabItem {
                         Label("Statistics", systemImage: "chart.pie")
                     }
-                SettingsView(user: user)
+                SettingsView()
                     .tabItem {
                         Label("Settings", systemImage: "gear")
                     }
