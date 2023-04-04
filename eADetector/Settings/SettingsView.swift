@@ -19,7 +19,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationView() {
             List {
-                NavigationLink("Profile", destination: ProfileView())
+                NavigationLink("Profile", destination: ProfileView(first: authSessionManager.user?.first ?? "", last: authSessionManager.user?.last ?? ""))
                 NavigationLink("Legal Info", destination: Text("Legal stuff placeholder"))
                 Button("Sign out", action: {
                         authSessionManager.signOut()

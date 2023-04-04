@@ -23,6 +23,10 @@ struct SummaryStep: View {
             Text("History: \(familyRisk)")
             Button(action: {
                 self.showOnboarding = false
+                Task {
+                    await authSessionManager.updateOnboarding()
+                    await authSessionManager.uploadOnboardingData(familyRisk: familyRisk, age: age)
+                }
             }) {
                 // TODO: send the data that we collect to the backend
                 // TODO: use callbacks to avoid passing down all the props here

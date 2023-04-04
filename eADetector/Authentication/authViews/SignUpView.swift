@@ -18,10 +18,10 @@ struct SignUpView: View {
         VStack {
             Text("Sign up").font(.largeTitle).padding(.top, 10)
             Spacer()
-            TextField("Email", text: $email).textFieldStyle(RoundedBorderTextFieldStyle()).autocapitalization(.none)
+            TextField("Email", text: $email).textFieldStyle(RoundedBorderTextFieldStyle()).autocapitalization(.none).autocorrectionDisabled(true)
             HStack {
-                TextField("First name", text: $firstName).textFieldStyle(.roundedBorder)
-                TextField("Last name", text: $lastName).textFieldStyle(.roundedBorder)
+                TextField("First name", text: $firstName).textFieldStyle(.roundedBorder).autocorrectionDisabled(true)
+                TextField("Last name", text: $lastName).textFieldStyle(.roundedBorder).autocorrectionDisabled(true)
             }
             SecureField("Password", text: $password).textFieldStyle(RoundedBorderTextFieldStyle())
             HStack {

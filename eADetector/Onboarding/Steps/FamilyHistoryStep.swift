@@ -12,7 +12,7 @@ struct FamilyHistoryStep: View {
     @Binding var onBoardingIndex: Int
     @Binding var familyHistorySelection: String
     
-    let options = ["I don't know", "Yes", "Yes, on my mother's side", "Yes, on my father's side", "No"]
+    let options = ["No", "I don't know", "Yes, on my father's side", "Yes, on my mother's side"]
     
     var body: some View {
         VStack {

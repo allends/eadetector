@@ -8,17 +8,19 @@
 import Foundation
 import Firebase
 import FirebaseCore
+import FirebaseAuth
 
 enum AuthState {
     case signUp
     case login
-    case session(user: FirebaseAuth.User)
+    case session(user: User)
 }
 
 struct UserInfo {
     let first: String
     let last: String
     let email: String
+    let showOnboarding: Bool
 }
 
 final class AuthSessionManager: ObservableObject {
@@ -33,6 +35,7 @@ final class AuthSessionManager: ObservableObject {
         Auth.auth().addStateDidChangeListener { auth, user in
             if user != nil {
                 self.authState = .session(user: user!)
+                self.fetchCurrentAuthSession()
             }
         }
     }
@@ -55,8 +58,10 @@ final class AuthSessionManager: ObservableObject {
                 self.db.collection("users").document(authResult?.user.uid ?? "error").setData([
                     "first": firstName,
                     "last": lastName,
-                    "email": email
+                    "email": email,
+                    "showOnboarding": true,
                 ])
+                self.fetchCurrentAuthSession()
             }
         }
         showLogin()
@@ -93,50 +98,51 @@ final class AuthSessionManager: ObservableObject {
                     let data = document.data()
                     if let data = data {
                         print("data", data)
-                        let newUser = UserInfo(first: data["first"] as? String ?? "", last: data["last"] as? String ?? "", email: data["email"] as? String ?? "")
+                        let newUser = UserInfo(first: data["first"] as? String ?? "", last: data["last"] as? String ?? "", email: data["email"] as? String ?? "", showOnboarding: data["showOnboarding"] as? Bool ?? false)
                         self.user = newUser
                     }
                 }
             }
     }
     
-    func updateName(name: String) {
-        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-        changeRequest?.displayName = name
-        changeRequest?.commitChanges { error in
-          // ...
+    func updateName(first: String, last: String) async {
+        guard let user = Auth.auth().currentUser else { return }
+        do {
+            try await db.collection("users").document(user.uid).setData([
+                "first": first,
+                "last": last
+            ], merge: true)
+        } catch {
+            print("error updating first name")
         }
+        fetchCurrentAuthSession()
     }
     
-    // TODO do some error handling on the result of the update
-    func updateFirstName(firstName: String) async {
-        if case let .session(user) = authState {
-            print("we have a user")
-            do {
-                try await db.collection("users").document(user.uid).setData([
-                    "first": firstName
-                ], merge: true)
-                fetchCurrentAuthSession()
-            } catch {
-                print("error occured")
-            }
-        } else {
-            return
+    func updateOnboarding() async {
+        guard let user = Auth.auth().currentUser else { return }
+        do {
+            try await db.collection("users").document(user.uid).setData([
+                "showOnboarding": false,
+            ], merge: true)
+        } catch {
+            print("error updating onboarding info")
         }
-        
-        
-    }
-    
-    func updateLastName(lastName: String) async {
-
-    }
-    
-    func checkOnboarding () async {
-
+        fetchCurrentAuthSession()
     }
 
-    func upload() {
-
+    func uploadOnboardingData(familyRisk: String, age: Int) async {
+        guard let user = Auth.auth().currentUser else { return }
+        let options = ["No", "I don't know", "Yes, on my father's side", "Yes, on my mother's side"]
+        let riskNumber = options.firstIndex(of: familyRisk) ?? 0
+        do {
+            try await db.collection("users").document(user.uid).setData([
+                "age": age,
+                "familyRiskLevel": riskNumber
+            ], merge: true)
+        } catch {
+            print("error uploading onboarding info")
+        }
+        fetchCurrentAuthSession()
     }
     
 }
