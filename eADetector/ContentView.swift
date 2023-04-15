@@ -22,7 +22,12 @@ struct ContentView: View {
         VStack {
             if (showOnboarding) {
                 Onboarding(showOnboarding: $showOnboarding)
-            } else {
+            } else if (authSessionManager.user == nil) {
+                VStack {
+                    
+                }
+            }
+            else {
                 TabView {
                     DashBoardView()
                         .tabItem {
@@ -36,6 +41,19 @@ struct ContentView: View {
                         .tabItem {
                             Label("Settings", systemImage: "gear")
                         }
+                }.onAppear {
+                    // this marks the end of the last processed data
+                    let start: Date = authSessionManager.user?.endDate ?? Date()
+                    // start processing up until the current time
+                    let end = Date()
+                    
+                    // if we already did this part, then we should skip it
+                    if start == end { return }
+                    var activeEnergy: [HealthStat] = []
+                    healthStore.requestHealthStat(by: "activeEnergyBurned", start: start, end: Date()) { hStats in
+                        activeEnergy = hStats
+                    }
+                    authSessionManager.processHealthData(activeEnergyStat: activeEnergy)
                 }
             }
         }

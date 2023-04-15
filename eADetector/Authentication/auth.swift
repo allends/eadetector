@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 import FirebaseCore
 import FirebaseAuth
+import FirebaseMLModelDownloader
 
 enum AuthState {
     case signUp
@@ -21,6 +22,8 @@ struct UserInfo {
     let last: String
     let email: String
     let showOnboarding: Bool
+    let startDate: Date
+    let endDate: Date
 }
 
 final class AuthSessionManager: ObservableObject {
@@ -98,7 +101,15 @@ final class AuthSessionManager: ObservableObject {
                     let data = document.data()
                     if let data = data {
                         print("data", data)
-                        let newUser = UserInfo(first: data["first"] as? String ?? "", last: data["last"] as? String ?? "", email: data["email"] as? String ?? "", showOnboarding: data["showOnboarding"] as? Bool ?? false)
+                        let newUser = UserInfo(
+                            first: data["first"] as? String ?? "",
+                            last: data["last"] as? String ?? "",
+                            email: data["email"] as? String ?? "",
+                            showOnboarding: data["showOnboarding"] as? Bool ?? false,
+                            startDate: (data["start"] as? Timestamp)?.dateValue() ?? Date(),
+                            endDate: (data["end"] as? Timestamp)?.dateValue() ?? Date()
+                        )
+                        print(newUser)
                         self.user = newUser
                     }
                 }
@@ -143,6 +154,10 @@ final class AuthSessionManager: ObservableObject {
             print("error uploading onboarding info")
         }
         fetchCurrentAuthSession()
+    }
+    
+    func processHealthData(activeEnergyStat: [HealthStat]) {
+        guard let user = Auth.auth().currentUser else { return }
     }
     
 }
