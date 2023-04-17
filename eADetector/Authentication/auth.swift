@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 import FirebaseCore
 import FirebaseAuth
-import FirebaseMLModelDownloader
+// import FirebaseMLModelDownloader
 
 enum AuthState {
     case signUp

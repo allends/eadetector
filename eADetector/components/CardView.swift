@@ -10,11 +10,14 @@ import SwiftUI
 struct CardView: View {
     @State var content: String
     @State private var collapsed: Bool = true
+    @State private var showGame = false
     
     var name: String
     var date: String
+    var test: String
     
     var body: some View {
+        
         VStack {
             Button(
                 action: {self.collapsed.toggle()},
@@ -40,18 +43,23 @@ struct CardView: View {
             .buttonStyle(PlainButtonStyle())
             
             VStack {
-                Text(content)
-                Button("Take Test"){}
-                    .disabled(true)
-                    .padding(EdgeInsets(top: 5, leading: 15, bottom: 5, trailing: 15))
-                    .background(Color(red: 0, green:0.5, blue: 0))
-                    .cornerRadius(10)
+                Text(content + "\n")
+                
+                if (test == "Reaction") {
+                    NavigationLink(destination: ReactionTest()) {
+                        Text("Start Test")}
+                } else if (test == "MIS") {
+                    Text("NOT IMPLEMENTED")
+                } else if (test == "SAGE") {
+                    Text("NOT IMPLEMENTED")
+                }
+                
                 
             }
             .padding(EdgeInsets(top: 5, leading: 15, bottom: 20, trailing: 15))
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: collapsed ? 0 : .none)
             .clipped()
-            .animation(Animation.easeInOut(duration: 0.3))
+            .animation(.easeInOut(duration: 0.3))
             .transition(.slide)
         }
         .cornerRadius(10)
@@ -63,10 +71,3 @@ struct CardView: View {
     }
 }
 
-
-struct CardView_Previews: PreviewProvider {
-    static var previews: some View {
-        CardView( content: "The Memory Impairement Screen (MIS) is a brief screening tool to evaluate memory skills in a patient.", name: "Memory Impairment Screen (MIS)", date:"02/21/2020"
-        )
-    }
-}

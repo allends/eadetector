@@ -16,17 +16,19 @@ struct StatisticsView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                Spacer()
-                Picker("Pick statistic", selection: $selectedStatistic) {
-                    ForEach(Activity.allActivities()) { activity in
-                        Text(activity.name).tag(activity)
-                    }
-                }
-                ActivityFullView(activity: selectedStatistic, repository: healthStore, formFactor: ChartForm.extraLarge).padding(10)
-                NavigationLink("More", destination: MetricDetail(activity: selectedStatistic))
-                Spacer()
-            }.navigationTitle("Statistics")
+                VStack {
+                        Spacer()
+                        Picker("Pick statistic", selection: $selectedStatistic) {
+                            ForEach(Activity.allActivities()) { activity in
+                                Text(activity.name).tag(activity)
+                            }
+                        }
+                        ActivityFullView(activity: selectedStatistic, repository: healthStore, formFactor: ChartForm.extraLarge).padding(10)
+                        NavigationLink("More", destination: MetricDetail(activity: selectedStatistic))
+                        Spacer()
+                    
+                }.navigationTitle("Statistics")
+            
         }
         
     }

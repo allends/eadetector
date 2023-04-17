@@ -37,6 +37,10 @@ struct ContentView: View {
                         .tabItem {
                             Label("Statistics", systemImage: "chart.pie")
                         }
+                    TestsView()
+                        .tabItem {
+                            Label("Tests", systemImage: "pencil.circle")
+                        }
                     SettingsView()
                         .tabItem {
                             Label("Settings", systemImage: "gear")
