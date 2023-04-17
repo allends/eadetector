@@ -24,7 +24,6 @@ final class HealthStore: ObservableObject {
     
     @Published var healthStore: HKHealthStore?
     var query: HKStatisticsCollectionQuery?
-    // TODO: make this work
     private var authorized: Bool = false
     
     static let stepCount = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.stepCount)!
@@ -57,15 +56,15 @@ final class HealthStore: ObservableObject {
         }
     }
     
-    func requestHealthStat(by category: String, completion: @escaping ([HealthStat]) -> Void) {
+    func requestHealthStat(by category: String, start: Date? = nil, end: Date? = nil, completion: @escaping ([HealthStat]) -> Void) {
         guard let store = healthStore, let type = HKObjectType.quantityType(forIdentifier: typeByCategory(category: category)) else {
             return
         }
         
         // TODO: add query parameters to this section
         
-        let startDate = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
-        let endDate = Date()
+        let startDate = start ?? Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
+        let endDate = end ?? Date()
         let anchorDate = Date.firstDayOfWeek()
         let dailyComponent = DateComponents(day: 1)
         

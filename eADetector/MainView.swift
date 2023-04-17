@@ -28,14 +28,9 @@ struct MainView: View {
             SignUpView()
                 .environmentObject(authSessionManager)
 
-        // When user registers for the first time or tries to login
-        case .confirmCode(let username):
-            ConfirmationView(username: username)
-                .environmentObject(authSessionManager)
-
         // If user is signIn, show normal view
         case .session(let user):
-            ContentView(user: user)
+            ContentView(showOnboarding: authSessionManager.user?.showOnboarding ?? false)
                 .environmentObject(authSessionManager)
                 .environmentObject(healthStore)
         }

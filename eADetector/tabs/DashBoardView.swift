@@ -12,7 +12,7 @@ import SwiftUICharts
 struct DashBoardView: View {
     
     @EnvironmentObject var healthStore: HealthStore
-    let user: User
+    @EnvironmentObject var authSessionManager: AuthSessionManager
     let activity = Activity(id: "activeEnergyBurned", name: "Active Burned Calories", image: "⚡️")
     let steps = Activity(id: "stepCount", name: "Step Count", image: "👣")
     let distance = Activity(id: "distanceWalkingRunning", name: "Distance Walking/Running", image: "🏃🏻‍♀️")
@@ -33,7 +33,7 @@ struct DashBoardView: View {
                     }
                 }
                 Spacer()
-            }.navigationTitle("Hello, \(user.firstName)").backgroundStyle(.background)
+            }.navigationTitle("Hello, \(authSessionManager.user?.first ?? "")").backgroundStyle(.background)
         }
     }
 }

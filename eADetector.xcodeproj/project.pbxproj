@@ -10,7 +10,6 @@
 		5728AD6029D23F9400719A14 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5728AD5F29D23F9400719A14 /* GoogleService-Info.plist */; };
 		5728AD6229D2400400719A14 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5728AD6129D2400400719A14 /* CardView.swift */; };
 		9F2461BD298422A70060574F /* auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461BC298422A70060574F /* auth.swift */; };
-		9F2461BF298430E30060574F /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461BE298430E30060574F /* ConfirmationView.swift */; };
 		9F2461C1298431520060574F /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461C0298431520060574F /* SignUpView.swift */; };
 		9F2461C5298445400060574F /* DashBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461C4298445400060574F /* DashBoardView.swift */; };
 		9F2461C72984460E0060574F /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461C62984460E0060574F /* StatisticsView.swift */; };
@@ -52,7 +51,6 @@
 		5728AD5F29D23F9400719A14 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "eADetector/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5728AD6129D2400400719A14 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = eADetector/components/CardView.swift; sourceTree = SOURCE_ROOT; };
 		9F2461BC298422A70060574F /* auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = auth.swift; sourceTree = "<group>"; };
-		9F2461BE298430E30060574F /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
 		9F2461C0298431520060574F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		9F2461C4298445400060574F /* DashBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardView.swift; sourceTree = "<group>"; };
 		9F2461C62984460E0060574F /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
@@ -115,7 +113,6 @@
 			isa = PBXGroup;
 			children = (
 				9FB75A9A2982BBD900759F0F /* LoginView.swift */,
-				9F2461BE298430E30060574F /* ConfirmationView.swift */,
 				9F2461C0298431520060574F /* SignUpView.swift */,
 			);
 			path = authViews;
@@ -335,7 +332,6 @@
 				9F6F1A8429B67EAF007F70D5 /* AgeStep.swift in Sources */,
 				9F2461C5298445400060574F /* DashBoardView.swift in Sources */,
 				9F6F1A7F29B67C77007F70D5 /* Onboarding.swift in Sources */,
-				9F2461BF298430E30060574F /* ConfirmationView.swift in Sources */,
 				9F6F1A7C29B245CC007F70D5 /* ActivityFullView.swift in Sources */,
 				9F2461CE2984A2A70060574F /* styles.swift in Sources */,
 				9F2461BD298422A70060574F /* auth.swift in Sources */,
