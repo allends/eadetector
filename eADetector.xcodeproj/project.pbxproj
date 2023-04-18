@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5728AD6029D23F9400719A14 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5728AD5F29D23F9400719A14 /* GoogleService-Info.plist */; };
 		5728AD6229D2400400719A14 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5728AD6129D2400400719A14 /* CardView.swift */; };
 		57CFCD8129EDD1AB00D66ED4 /* TestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CFCD8029EDD1AB00D66ED4 /* TestsView.swift */; };
 		57CFCD8329EDD68100D66ED4 /* ReactionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CFCD8229EDD68100D66ED4 /* ReactionTest.swift */; };
@@ -28,6 +27,7 @@
 		9F2461D92984C81A0060574F /* ActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461D82984C81A0060574F /* ActivityViewModel.swift */; };
 		9F6A5CF329EAFD2900715A20 /* utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6A5CF229EAFD2900715A20 /* utils.swift */; };
 		9F6A5CF529EAFE4B00715A20 /* SexStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6A5CF429EAFE4B00715A20 /* SexStep.swift */; };
+		9F6A5CF929EF12DD00715A20 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F6A5CF829EF12DD00715A20 /* GoogleService-Info.plist */; };
 		9F6F1A7229AD5EF1007F70D5 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6F1A7129AD5EF1007F70D5 /* ProfileView.swift */; };
 		9F6F1A7A29B19FBE007F70D5 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 9F6F1A7929B19FBE007F70D5 /* SwiftUICharts */; };
 		9F6F1A7C29B245CC007F70D5 /* ActivityFullView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6F1A7B29B245CC007F70D5 /* ActivityFullView.swift */; };
@@ -55,7 +55,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5728AD5F29D23F9400719A14 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "eADetector/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5728AD6129D2400400719A14 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = eADetector/components/CardView.swift; sourceTree = SOURCE_ROOT; };
 		57CFCD8029EDD1AB00D66ED4 /* TestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsView.swift; sourceTree = "<group>"; };
 		57CFCD8229EDD68100D66ED4 /* ReactionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReactionTest.swift; path = eADetector/tabs/ReactionTest.swift; sourceTree = SOURCE_ROOT; };
@@ -76,6 +75,7 @@
 		9F2461D82984C81A0060574F /* ActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewModel.swift; sourceTree = "<group>"; };
 		9F6A5CF229EAFD2900715A20 /* utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utils.swift; sourceTree = "<group>"; };
 		9F6A5CF429EAFE4B00715A20 /* SexStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SexStep.swift; sourceTree = "<group>"; };
+		9F6A5CF829EF12DD00715A20 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9F6F1A7129AD5EF1007F70D5 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		9F6F1A7B29B245CC007F70D5 /* ActivityFullView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFullView.swift; sourceTree = "<group>"; };
 		9F6F1A7E29B67C77007F70D5 /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
@@ -234,7 +234,7 @@
 		9FB75A8A2982B65B00759F0F /* eADetector */ = {
 			isa = PBXGroup;
 			children = (
-				5728AD5F29D23F9400719A14 /* GoogleService-Info.plist */,
+				9F6A5CF829EF12DD00715A20 /* GoogleService-Info.plist */,
 				9F6F1A7D29B67C60007F70D5 /* Onboarding */,
 				9F6F1A7729AD93FB007F70D5 /* Authentication */,
 				9F6F1A7529AD93BB007F70D5 /* Settings */,
@@ -337,8 +337,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FB75A942982B65C00759F0F /* Preview Assets.xcassets in Resources */,
-				5728AD6029D23F9400719A14 /* GoogleService-Info.plist in Resources */,
 				9FB75A902982B65C00759F0F /* Assets.xcassets in Resources */,
+				9F6A5CF929EF12DD00715A20 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,7 +511,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"eADetector/Preview Content\"";
-				DEVELOPMENT_TEAM = S37MMLVUL5;
+				DEVELOPMENT_TEAM = 4QC73UKNQH;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -555,7 +555,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"eADetector/Preview Content\"";
-				DEVELOPMENT_TEAM = S37MMLVUL5;
+				DEVELOPMENT_TEAM = 4QC73UKNQH;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

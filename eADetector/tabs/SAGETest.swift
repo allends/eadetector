@@ -16,6 +16,39 @@ struct SAGEQuestion: Identifiable {
     var shuffledAnswers: [String] = []
 }
 
+struct SageQuestionView: View {
+    var question: SAGEQuestion
+    @Binding var selectedAnswers: [Int?]
+    @Binding var showAnswers: Bool
+    // need to get reactivity
+    @State var selectedAnswer: Int = -1
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(question.question)
+                .font(.headline)
+            ForEach(0..<question.shuffledAnswers.count, id: \.self) { index in
+                Button(action: {
+                    selectedAnswers[question.id] = index
+                    selectedAnswer = index
+                }) {
+                    HStack {
+                        Image(systemName: selectedAnswer == index  ? "checkmark.circle.fill" : "circle")
+                            .foregroundColor(selectedAnswer == index ? .blue : .gray)
+                        Text(question.shuffledAnswers[index])
+                            .font(.body)
+                    }
+                }
+            }
+            if showAnswers {
+                Text("Correct Answer: \(question.answers[question.correctAnswerIndex])")
+                    .font(.footnote)
+                    .foregroundColor(.green)
+            }
+        }
+    }
+}
+
 // View for SAGE Test
 struct SAGETest: View {
     @State private var questions: [SAGEQuestion] = []
@@ -27,26 +60,7 @@ struct SAGETest: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 ForEach(questions) { question in
-                    VStack(alignment: .leading) {
-                        Text(question.question)
-                            .font(.headline)
-                        ForEach(0..<question.shuffledAnswers.count, id: \.self) { index in
-                            Button(action: {
-                                selectedAnswers[question.id] = index
-                            }) {
-                                HStack {
-                                    Image(systemName: selectedAnswers[question.id] == index ? "checkmark.circle.fill" : "circle")
-                                    Text(question.shuffledAnswers[index])
-                                        .font(.body)
-                                }
-                            }
-                        }
-                        if showAnswers {
-                            Text("Correct Answer: \(question.answers[question.correctAnswerIndex])")
-                                .font(.footnote)
-                                .foregroundColor(.green)
-                        }
-                    }
+                    SageQuestionView(question: question, selectedAnswers: $selectedAnswers, showAnswers: $showAnswers)
                 }
                 Button(action: {
                     verifyAnswer()
