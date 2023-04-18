@@ -25,10 +25,10 @@ struct CardView: View {
                     HStack {
                         VStack(alignment: .leading) {
                             Text(name)
-                                .font(.title)
+                                .font(.subheadline)
                                 .fontWeight(.black)
                                 .foregroundColor(.primary)
-                                .lineLimit(3)
+                                .lineLimit(3).padding(.bottom, 3)
                             Text("Last Taken: " + date)
                                 .font(.caption)
                                 .foregroundColor(.secondary)
@@ -48,11 +48,15 @@ struct CardView: View {
                 if (test == "Reaction") {
                     NavigationLink(destination: ReactionTest()) {
                         Text("Start Test")}
-                } else if (test == "MIS") {
-                    Text("Start Test")
-                } else if (test == "SAGE") {
+                }else if (test == "SAGE") {
                     NavigationLink(destination: SAGETest()) {
                         Text("Start SAGE Test")}
+                } else if (test == "AD8") {
+                    NavigationLink(destination: AD8Test()) {
+                        Text("Start AD8 Test")}
+                } else if (test == "FAQ") {
+                    NavigationLink(destination: FAQTest()) {
+                        Text("Start FAQ Test")}
                 }
                 
                 

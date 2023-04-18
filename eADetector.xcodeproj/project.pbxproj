@@ -12,6 +12,8 @@
 		57CFCD8129EDD1AB00D66ED4 /* TestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CFCD8029EDD1AB00D66ED4 /* TestsView.swift */; };
 		57CFCD8329EDD68100D66ED4 /* ReactionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CFCD8229EDD68100D66ED4 /* ReactionTest.swift */; };
 		57CFCD8529EDFF4100D66ED4 /* SAGETest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CFCD8429EDFF4100D66ED4 /* SAGETest.swift */; };
+		57CFCD8729EE35FD00D66ED4 /* FAQTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CFCD8629EE35FD00D66ED4 /* FAQTest.swift */; };
+		57CFCD8929EE360800D66ED4 /* AD8Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CFCD8829EE360800D66ED4 /* AD8Test.swift */; };
 		9F2461BD298422A70060574F /* auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461BC298422A70060574F /* auth.swift */; };
 		9F2461C1298431520060574F /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461C0298431520060574F /* SignUpView.swift */; };
 		9F2461C5298445400060574F /* DashBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461C4298445400060574F /* DashBoardView.swift */; };
@@ -56,6 +58,8 @@
 		57CFCD8029EDD1AB00D66ED4 /* TestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsView.swift; sourceTree = "<group>"; };
 		57CFCD8229EDD68100D66ED4 /* ReactionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReactionTest.swift; path = eADetector/tabs/ReactionTest.swift; sourceTree = SOURCE_ROOT; };
 		57CFCD8429EDFF4100D66ED4 /* SAGETest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SAGETest.swift; path = eADetector/tabs/SAGETest.swift; sourceTree = SOURCE_ROOT; };
+		57CFCD8629EE35FD00D66ED4 /* FAQTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FAQTest.swift; path = eADetector/tabs/FAQTest.swift; sourceTree = SOURCE_ROOT; };
+		57CFCD8829EE360800D66ED4 /* AD8Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AD8Test.swift; path = eADetector/tabs/AD8Test.swift; sourceTree = SOURCE_ROOT; };
 		9F2461BC298422A70060574F /* auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = auth.swift; sourceTree = "<group>"; };
 		9F2461C0298431520060574F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		9F2461C4298445400060574F /* DashBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardView.swift; sourceTree = "<group>"; };
@@ -113,6 +117,8 @@
 				5728AD6129D2400400719A14 /* CardView.swift */,
 				57CFCD8229EDD68100D66ED4 /* ReactionTest.swift */,
 				57CFCD8429EDFF4100D66ED4 /* SAGETest.swift */,
+				57CFCD8629EE35FD00D66ED4 /* FAQTest.swift */,
+				57CFCD8829EE360800D66ED4 /* AD8Test.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -338,6 +344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FB75A9B2982BBD900759F0F /* LoginView.swift in Sources */,
+				57CFCD8929EE360800D66ED4 /* AD8Test.swift in Sources */,
 				9F6F1A8429B67EAF007F70D5 /* AgeStep.swift in Sources */,
 				9F2461C5298445400060574F /* DashBoardView.swift in Sources */,
 				9F6F1A7F29B67C77007F70D5 /* Onboarding.swift in Sources */,
@@ -352,6 +359,7 @@
 				9F2461D92984C81A0060574F /* ActivityViewModel.swift in Sources */,
 				9F6F1A8229B67E17007F70D5 /* InfoStep.swift in Sources */,
 				9F2461D52984C5340060574F /* HealthStat.swift in Sources */,
+				57CFCD8729EE35FD00D66ED4 /* FAQTest.swift in Sources */,
 				9FB75A9D2982BFFE00759F0F /* MainView.swift in Sources */,
 				9F2461D32984B4030060574F /* ActivityView.swift in Sources */,
 				9FB75A8E2982B65B00759F0F /* ContentView.swift in Sources */,
