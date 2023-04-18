@@ -11,7 +11,7 @@ import SwiftUICharts
 struct StatisticsView: View {
     
     @EnvironmentObject var healthStore: HealthStore
-    @State var selectedStatistic: Activity = Activity(id: "activeEnergyBurned", name: "Active Burned Calories", image: "⚡️")
+    @State var selectedStatistic: Activity = Activity(id: "oxygenSaturation", name: "Oxygen Saturation", image: "🧘")
     // TODO: make a date picker to choose data range
     
     var body: some View {

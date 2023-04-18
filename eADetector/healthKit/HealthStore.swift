@@ -26,20 +26,17 @@ final class HealthStore: ObservableObject {
     var query: HKStatisticsCollectionQuery?
     private var authorized: Bool = false
     
+    static let activeEnergyBurned = HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!
+    static let appleStandTime = HKObjectType.quantityType(forIdentifier: .appleStandTime)!
+    static let restingHeartRate = HKObjectType.quantityType(forIdentifier: .restingHeartRate)!
     static let stepCount = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.stepCount)!
-    static let heartRate = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.heartRate)!
-    static let walkingSteadiness = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.appleWalkingSteadiness)!
-    static let respitoryRate = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.respiratoryRate)!
+//    static let walkingSteadiness = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.appleWalkingSteadiness)!
+    static let oxygenLevels = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.oxygenSaturation)!
+    static let sleepingWristTemperature = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.appleSleepingWristTemperature)!
     
-    let allTypes = Set([
-        HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
-        HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!,
-        HKObjectType.quantityType(forIdentifier: .appleStandTime)!,
-        HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-        HKObjectType.quantityType(forIdentifier: .stepCount)!,
-    ])
+    let allTypes = Set([restingHeartRate, sleepingWristTemperature, activeEnergyBurned, stepCount, appleStandTime,  oxygenLevels])
     
-    static let readAccess: Set = [stepCount, heartRate, walkingSteadiness, respitoryRate ]
+    static let readAccess: Set = [restingHeartRate, sleepingWristTemperature, activeEnergyBurned, stepCount, appleStandTime,  oxygenLevels]
     
     init () {
         if HKHealthStore.isHealthDataAvailable() {
@@ -54,7 +51,54 @@ final class HealthStore: ObservableObject {
         healthStore.requestAuthorization(toShare: [], read: allTypes) { (success, error) in
             completion(success)
         }
+        // TODO update the ui at this part
     }
+    
+    func requestHealthStatAwait(by category: String, start: Date? = nil, end: Date? = nil) async -> [HealthStat] {
+        guard let store = healthStore, let type = HKObjectType.quantityType(forIdentifier: typeByCategory(category: category)) else {
+            return []
+        }
+        
+        // TODO: add query parameters to this section
+        
+        let startDate = start ?? Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
+        let endDate = end ?? Date()
+        let anchorDate = Date.firstDayOfWeek()
+        let dailyComponent = DateComponents(day: 1)
+        
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [.strictStartDate])
+        let predicateCase = HKSamplePredicate.quantitySample(type: type, predicate: predicate)
+        
+        var options: HKStatisticsOptions = []
+        
+        if category == "oxygenSaturation" || category == "restingHeartRate" {
+            options = .discreteAverage
+        }
+        
+        let asyncQuery = HKStatisticsCollectionQueryDescriptor(predicate: predicateCase, options: options, anchorDate: anchorDate, intervalComponents: dailyComponent)
+        
+        var results: [HealthStat] = []
+                
+        do {
+            let rawResults: HKStatisticsCollection = try await asyncQuery.result(for: store)
+            rawResults.enumerateStatistics(from: startDate, to: endDate, with: { stats, _ in
+                if category == "oxygenSaturation" || category == "restingHeartRate" {
+                    let stat = HealthStat(stat: stats.averageQuantity(), date: stats.startDate)
+                    print(stats)
+                    results.append(stat)
+                } else {
+                    let stat = HealthStat(stat: stats.sumQuantity(), date: stats.startDate)
+                    results.append(stat)
+                }
+                
+            })
+        } catch {
+            print("Error info: \(error)")
+            return []
+        }
+        return results
+}
+    
     
     func requestHealthStat(by category: String, start: Date? = nil, end: Date? = nil, completion: @escaping ([HealthStat]) -> Void) {
         guard let store = healthStore, let type = HKObjectType.quantityType(forIdentifier: typeByCategory(category: category)) else {
@@ -68,19 +112,31 @@ final class HealthStore: ObservableObject {
         let anchorDate = Date.firstDayOfWeek()
         let dailyComponent = DateComponents(day: 1)
         
+        var options: HKStatisticsOptions = []
+        
+        if category == "oxygenSaturation" || category == "restingHeartRate" {
+            options = .discreteAverage
+        }
         
         var healthStats = [HealthStat]()
         
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
         
-        query = HKStatisticsCollectionQuery(quantityType: type, quantitySamplePredicate: predicate, options: .cumulativeSum, anchorDate: anchorDate, intervalComponents: dailyComponent)
+        query = HKStatisticsCollectionQuery(quantityType: type, quantitySamplePredicate: predicate, options: options, anchorDate: anchorDate, intervalComponents: dailyComponent)
         
         query?.initialResultsHandler = { query, statistics, error  in
             statistics?.enumerateStatistics(from: startDate, to: endDate, with: { stats, _ in
-                let stat = HealthStat(stat: stats.sumQuantity(), date: stats.startDate)
-                healthStats.append(stat)
+                if category == "oxygenSaturation" || category == "restingHeartRate" {
+                    let stat = HealthStat(stat: stats.averageQuantity(), date: stats.startDate)
+                    healthStats.append(stat)
+                } else {
+                    let stat = HealthStat(stat: stats.sumQuantity(), date: stats.startDate)
+                    healthStats.append(stat)
+                }
             })
-            
+            if let error = error {
+                print(error)
+            }
             completion(healthStats)
         }
         
@@ -95,19 +151,22 @@ final class HealthStore: ObservableObject {
         switch category {
         case "activeEnergyBurned":
             return .activeEnergyBurned
-            
         case "appleExerciseTime":
             return .appleExerciseTime
-            
         case "appleStandTime":
             return .appleStandTime
-            
         case "distanceWalkingRunning":
             return .distanceWalkingRunning
-            
+        case "oxygenSaturation":
+            return .oxygenSaturation
+        case "restingHeartRate":
+            return .restingHeartRate
+        case "sleepAnalysis":
+            return .appleSleepingWristTemperature
         case "stepCount":
             return .stepCount
         default:
+            print("using fallback type")
             return .stepCount
         }
     }
