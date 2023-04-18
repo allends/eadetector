@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5728AD6029D23F9400719A14 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5728AD5F29D23F9400719A14 /* GoogleService-Info.plist */; };
+		5728AD6229D2400400719A14 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5728AD6129D2400400719A14 /* CardView.swift */; };
+		57CFCD8129EDD1AB00D66ED4 /* TestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CFCD8029EDD1AB00D66ED4 /* TestsView.swift */; };
+		57CFCD8329EDD68100D66ED4 /* ReactionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CFCD8229EDD68100D66ED4 /* ReactionTest.swift */; };
+		57CFCD8529EDFF4100D66ED4 /* SAGETest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CFCD8429EDFF4100D66ED4 /* SAGETest.swift */; };
+		57CFCD8729EE35FD00D66ED4 /* FAQTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CFCD8629EE35FD00D66ED4 /* FAQTest.swift */; };
+		57CFCD8929EE360800D66ED4 /* AD8Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CFCD8829EE360800D66ED4 /* AD8Test.swift */; };
 		9F2461BD298422A70060574F /* auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461BC298422A70060574F /* auth.swift */; };
 		9F2461C1298431520060574F /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461C0298431520060574F /* SignUpView.swift */; };
 		9F2461C5298445400060574F /* DashBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461C4298445400060574F /* DashBoardView.swift */; };
@@ -39,7 +46,6 @@
 		9F72C8E829CA015F00CB5D0B /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9F72C8E729CA015F00CB5D0B /* FirebaseFirestoreSwift */; };
 		9F72C8EA29CA015F00CB5D0B /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 9F72C8E929CA015F00CB5D0B /* FirebaseFunctions */; };
 		9F72C8EC29CA015F00CB5D0B /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9F72C8EB29CA015F00CB5D0B /* FirebaseStorage */; };
-		9F72C8EF29CA0E9300CB5D0B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F72C8EE29CA0E9300CB5D0B /* GoogleService-Info.plist */; };
 		9FB75A8C2982B65B00759F0F /* eADetectorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB75A8B2982B65B00759F0F /* eADetectorApp.swift */; };
 		9FB75A8E2982B65B00759F0F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB75A8D2982B65B00759F0F /* ContentView.swift */; };
 		9FB75A902982B65C00759F0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FB75A8F2982B65C00759F0F /* Assets.xcassets */; };
@@ -49,6 +55,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5728AD5F29D23F9400719A14 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "eADetector/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		5728AD6129D2400400719A14 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = eADetector/components/CardView.swift; sourceTree = SOURCE_ROOT; };
+		57CFCD8029EDD1AB00D66ED4 /* TestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsView.swift; sourceTree = "<group>"; };
+		57CFCD8229EDD68100D66ED4 /* ReactionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReactionTest.swift; path = eADetector/tabs/ReactionTest.swift; sourceTree = SOURCE_ROOT; };
+		57CFCD8429EDFF4100D66ED4 /* SAGETest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SAGETest.swift; path = eADetector/tabs/SAGETest.swift; sourceTree = SOURCE_ROOT; };
+		57CFCD8629EE35FD00D66ED4 /* FAQTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FAQTest.swift; path = eADetector/tabs/FAQTest.swift; sourceTree = SOURCE_ROOT; };
+		57CFCD8829EE360800D66ED4 /* AD8Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AD8Test.swift; path = eADetector/tabs/AD8Test.swift; sourceTree = SOURCE_ROOT; };
 		9F2461BC298422A70060574F /* auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = auth.swift; sourceTree = "<group>"; };
 		9F2461C0298431520060574F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		9F2461C4298445400060574F /* DashBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardView.swift; sourceTree = "<group>"; };
@@ -71,7 +84,6 @@
 		9F6F1A8529B67F6C007F70D5 /* FamilyHistoryStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyHistoryStep.swift; sourceTree = "<group>"; };
 		9F6F1A8729B6A4E9007F70D5 /* SummaryStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryStep.swift; sourceTree = "<group>"; };
 		9F6F1A8929B6AD54007F70D5 /* MetricDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricDetail.swift; sourceTree = "<group>"; };
-		9F72C8EE29CA0E9300CB5D0B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9FB75A882982B65B00759F0F /* eADetector.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eADetector.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FB75A8B2982B65B00759F0F /* eADetectorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = eADetectorApp.swift; sourceTree = "<group>"; };
 		9FB75A8D2982B65B00759F0F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -106,6 +118,11 @@
 		9F2461BB2984229A0060574F /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				5728AD6129D2400400719A14 /* CardView.swift */,
+				57CFCD8229EDD68100D66ED4 /* ReactionTest.swift */,
+				57CFCD8429EDFF4100D66ED4 /* SAGETest.swift */,
+				57CFCD8629EE35FD00D66ED4 /* FAQTest.swift */,
+				57CFCD8829EE360800D66ED4 /* AD8Test.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -124,6 +141,7 @@
 			children = (
 				9F2461C4298445400060574F /* DashBoardView.swift */,
 				9F2461C62984460E0060574F /* StatisticsView.swift */,
+				57CFCD8029EDD1AB00D66ED4 /* TestsView.swift */,
 			);
 			path = tabs;
 			sourceTree = "<group>";
@@ -216,6 +234,7 @@
 		9FB75A8A2982B65B00759F0F /* eADetector */ = {
 			isa = PBXGroup;
 			children = (
+				5728AD5F29D23F9400719A14 /* GoogleService-Info.plist */,
 				9F6F1A7D29B67C60007F70D5 /* Onboarding */,
 				9F6F1A7729AD93FB007F70D5 /* Authentication */,
 				9F6F1A7529AD93BB007F70D5 /* Settings */,
@@ -227,7 +246,6 @@
 				9FB75A8D2982B65B00759F0F /* ContentView.swift */,
 				9FB75A9C2982BFFE00759F0F /* MainView.swift */,
 				9FB75A8F2982B65C00759F0F /* Assets.xcassets */,
-				9F72C8EE29CA0E9300CB5D0B /* GoogleService-Info.plist */,
 				9FB75A912982B65C00759F0F /* eADetector.entitlements */,
 				9FB75A922982B65C00759F0F /* Preview Content */,
 				9F2461CD2984A2A70060574F /* styles.swift */,
@@ -284,7 +302,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1410;
-				LastUpgradeCheck = 1410;
+				LastUpgradeCheck = 1420;
 				TargetAttributes = {
 					9FB75A872982B65B00759F0F = {
 						CreatedOnToolsVersion = 14.1;
@@ -319,8 +337,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FB75A942982B65C00759F0F /* Preview Assets.xcassets in Resources */,
+				5728AD6029D23F9400719A14 /* GoogleService-Info.plist in Resources */,
 				9FB75A902982B65C00759F0F /* Assets.xcassets in Resources */,
-				9F72C8EF29CA0E9300CB5D0B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,6 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FB75A9B2982BBD900759F0F /* LoginView.swift in Sources */,
+				57CFCD8929EE360800D66ED4 /* AD8Test.swift in Sources */,
 				9F6F1A8429B67EAF007F70D5 /* AgeStep.swift in Sources */,
 				9F2461C5298445400060574F /* DashBoardView.swift in Sources */,
 				9F6F1A7F29B67C77007F70D5 /* Onboarding.swift in Sources */,
@@ -340,20 +359,25 @@
 				9F2461BD298422A70060574F /* auth.swift in Sources */,
 				9F2461C72984460E0060574F /* StatisticsView.swift in Sources */,
 				9F2461D72984C57E0060574F /* Activity.swift in Sources */,
+				57CFCD8529EDFF4100D66ED4 /* SAGETest.swift in Sources */,
 				9F2461C9298446250060574F /* SettingsView.swift in Sources */,
 				9F6A5CF329EAFD2900715A20 /* utils.swift in Sources */,
 				9F2461C1298431520060574F /* SignUpView.swift in Sources */,
 				9F2461D92984C81A0060574F /* ActivityViewModel.swift in Sources */,
 				9F6F1A8229B67E17007F70D5 /* InfoStep.swift in Sources */,
 				9F2461D52984C5340060574F /* HealthStat.swift in Sources */,
+				57CFCD8729EE35FD00D66ED4 /* FAQTest.swift in Sources */,
 				9FB75A9D2982BFFE00759F0F /* MainView.swift in Sources */,
 				9F2461D32984B4030060574F /* ActivityView.swift in Sources */,
 				9FB75A8E2982B65B00759F0F /* ContentView.swift in Sources */,
+				57CFCD8329EDD68100D66ED4 /* ReactionTest.swift in Sources */,
 				9FB75A8C2982B65B00759F0F /* eADetectorApp.swift in Sources */,
 				9F6F1A7229AD5EF1007F70D5 /* ProfileView.swift in Sources */,
+				5728AD6229D2400400719A14 /* CardView.swift in Sources */,
 				9F6A5CF529EAFE4B00715A20 /* SexStep.swift in Sources */,
 				9F2461D02984B3650060574F /* Step.swift in Sources */,
 				9F6F1A8A29B6AD54007F70D5 /* MetricDetail.swift in Sources */,
+				57CFCD8129EDD1AB00D66ED4 /* TestsView.swift in Sources */,
 				9F2461CC298458EF0060574F /* HealthStore.swift in Sources */,
 				9F6F1A8829B6A4E9007F70D5 /* SummaryStep.swift in Sources */,
 				9F6F1A8629B67F6C007F70D5 /* FamilyHistoryStep.swift in Sources */,
@@ -396,6 +420,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -454,6 +479,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -478,10 +504,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = eADetector/eADetector.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"eADetector/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QC73UKNQH;
+				DEVELOPMENT_TEAM = S37MMLVUL5;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -518,10 +548,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = eADetector/eADetector.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"eADetector/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QC73UKNQH;
+				DEVELOPMENT_TEAM = S37MMLVUL5;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

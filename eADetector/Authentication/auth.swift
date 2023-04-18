@@ -9,7 +9,6 @@ import Foundation
 import Firebase
 import FirebaseCore
 import FirebaseAuth
-import FirebaseMLModelDownloader
 import HealthKit
 
 enum AuthState {
