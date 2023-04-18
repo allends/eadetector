@@ -10,7 +10,6 @@ import SwiftUI
 struct SummaryStep: View {
     
     @Binding var onBoardingIndex: Int
-    @Binding var showOnboarding: Bool
     @Binding var familyRisk: String
     @Binding var sexRisk: String
     @Binding var age: Int
@@ -24,7 +23,6 @@ struct SummaryStep: View {
             Text("Sex \(sexRisk)")
             Text("History: \(familyRisk)")
             Button(action: {
-                self.showOnboarding = false
                 Task {
                     await authSessionManager.updateOnboarding()
                     await authSessionManager.uploadOnboardingData(familyRisk: familyRisk, age: age, sexRisk: sexRisk)

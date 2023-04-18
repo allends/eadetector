@@ -30,7 +30,7 @@ struct MainView: View {
 
         // If user is signIn, show normal view
         case .session(let _user):
-            ContentView(showOnboarding: authSessionManager.user?.showOnboarding ?? false)
+            ContentView()
                 .environmentObject(authSessionManager)
                 .environmentObject(healthStore)
         }

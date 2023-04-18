@@ -14,7 +14,6 @@ struct Onboarding: View {
     @State var sexSelection: String = "Other"
     
     @State var onBoardingIndex: Int = 0
-    @Binding var showOnboarding: Bool
     
     var body: some View {
         TabView (selection: $onBoardingIndex) {
@@ -22,7 +21,7 @@ struct Onboarding: View {
             AgeStep(onBoardingIndex: $onBoardingIndex, age: $age).tag(1)
             SexStep(onBoardingIndex: $onBoardingIndex, sexSelection: $sexSelection).tag(2)
             FamilyHistoryStep(onBoardingIndex: $onBoardingIndex, familyHistorySelection: $familyHistorySelection).tag(3)
-            SummaryStep(onBoardingIndex: $onBoardingIndex, showOnboarding: $showOnboarding, familyRisk: $familyHistorySelection, sexRisk: $sexSelection, age: $age).tag(4)
+            SummaryStep(onBoardingIndex: $onBoardingIndex, familyRisk: $familyHistorySelection, sexRisk: $sexSelection, age: $age).tag(4)
         }.tabViewStyle(.page).indexViewStyle(.page(backgroundDisplayMode: .always)).animation(.easeInOut, value: onBoardingIndex)
     }
 }

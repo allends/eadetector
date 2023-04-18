@@ -31,7 +31,7 @@ struct UserInfo {
     let scores: [(Date, Double)]
 }
 
-func makeRequest(dataToSend: [String: [Double]]) async -> Double? {
+func makeRequest(dataToSend: [String: [Double]]) async -> Double {
     // Set up the http request
     let url = URL(string: "https://healthkit-function-4plciervya-uc.a.run.app/")!
     var request = URLRequest(url: url)
@@ -50,35 +50,23 @@ func makeRequest(dataToSend: [String: [Double]]) async -> Double? {
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
             print("Unexpected response: \(String(describing: response))")
-            return nil
+            return 0
         }
 
         guard let responseText = String(data: data, encoding: .utf8) else {
             print("Unable to read data")
-            return nil
+            return 0
         }
-        
-        // Extract the score from the response string
-        if let openBracketRange = responseText.range(of: "["),
-           let closeBracketRange = responseText.range(of: "]"),
-           openBracketRange.upperBound < closeBracketRange.lowerBound {
-
-            let numberRange = openBracketRange.upperBound..<closeBracketRange.lowerBound
-            let numberString = responseText[numberRange]
-
-            if let doubleValue = Double(numberString) {
-                return doubleValue
-            } else {
-                print("Failed to convert the extracted string to Double.")
-            }
+        print(responseText)
+        if let doubleValue = Double(responseText) {
+            return doubleValue
         } else {
-            print("Failed to find the brackets in the input string.")
+            print("Failed to convert the extracted string to Double.")
         }
     } catch {
         print("Error: \(error.localizedDescription)")
-        return nil
     }
-    return nil
+    return 0
 }
 
 final class AuthSessionManager: ObservableObject {
@@ -143,6 +131,12 @@ final class AuthSessionManager: ObservableObject {
         } catch let signOutError as NSError {
           print("Error signing out: %@", signOutError)
         }
+    }
+    
+    func fetchUserMetrics() {
+        // make sure that we have a user session before we log in
+        guard let user = self.user else { return }
+        
     }
 
     func fetchCurrentAuthSession() {
@@ -228,12 +222,13 @@ final class AuthSessionManager: ObservableObject {
         guard let user = Auth.auth().currentUser else { return }
         let totalUploadData = (self.user?.scores ?? []) + scores
         // map the data to a dictionary
-        let totalUploadDataMapped = totalUploadData.map { ["\($0.0)": $0.1] }
-        print("DATA", totalUploadDataMapped)
+        var formattedData: [String: Any] = [:]
+        for (date, score) in scores {
+            formattedData["\(date)"] = score
+        }
+        print("DATA", formattedData)
         do {
-            try await db.collection("users").document(user.uid).setData([
-                "scores": totalUploadDataMapped
-            ], merge: true)
+            try await db.collection("users").document(user.uid).collection("metrics").document("eadScores").setData(formattedData, merge: true)
         } catch {
             print("error uploading eADScore info")
         }
@@ -256,13 +251,6 @@ final class AuthSessionManager: ObservableObject {
         let appleStandTimeStatMapped = averageGroupsOfSeven(numbers: appleStandTime.map { $0.stat?.doubleValue(for: HKUnit.minute()) ?? 0.0 })
         let heartRateMapped = averageGroupsOfSeven(numbers: heartRate.map { $0.stat?.doubleValue(for: HKUnit.count().unitDivided(by: HKUnit.minute())) ?? 0.0 })
         let requestsNeeded = activeEnergyStatMapped.count - 1
-        
-        print(activeEnergyStatMapped)
-        print(oxygenSaturationStatMapped)
-        print(sleepAnalysisStatMapped)
-        print(stepCountStatMapped)
-        print(appleStandTimeStatMapped)
-        print(heartRateMapped)
         
         if requestsNeeded < 0 { return }
         let calendar = Calendar.current

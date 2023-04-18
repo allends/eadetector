@@ -11,23 +11,17 @@ struct ContentView: View {
     
     @EnvironmentObject var authSessionManager: AuthSessionManager
     @EnvironmentObject var healthStore: HealthStore
-    @State var showOnboarding: Bool
     @State var onBoardingIndex = 0
-    
-    init(showOnboarding: Bool) {
-        self.showOnboarding = showOnboarding
-    }
     
     var body: some View {
         VStack {
-            if (showOnboarding) {
-                Onboarding(showOnboarding: $showOnboarding)
-            } else if (authSessionManager.user == nil) {
+            if (authSessionManager.user == nil) {
                 VStack {
-                    
+                    Text("loading")
                 }
-            }
-            else {
+            } else if (authSessionManager.user!.showOnboarding) {
+                Onboarding()
+            } else {
                 TabView {
                     DashBoardView()
                         .tabItem {
