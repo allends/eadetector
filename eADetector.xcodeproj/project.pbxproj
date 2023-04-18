@@ -11,6 +11,7 @@
 		5728AD6229D2400400719A14 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5728AD6129D2400400719A14 /* CardView.swift */; };
 		57CFCD8129EDD1AB00D66ED4 /* TestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CFCD8029EDD1AB00D66ED4 /* TestsView.swift */; };
 		57CFCD8329EDD68100D66ED4 /* ReactionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CFCD8229EDD68100D66ED4 /* ReactionTest.swift */; };
+		57CFCD8529EDFF4100D66ED4 /* SAGETest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CFCD8429EDFF4100D66ED4 /* SAGETest.swift */; };
 		9F2461BD298422A70060574F /* auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461BC298422A70060574F /* auth.swift */; };
 		9F2461C1298431520060574F /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461C0298431520060574F /* SignUpView.swift */; };
 		9F2461C5298445400060574F /* DashBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2461C4298445400060574F /* DashBoardView.swift */; };
@@ -54,6 +55,7 @@
 		5728AD6129D2400400719A14 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = eADetector/components/CardView.swift; sourceTree = SOURCE_ROOT; };
 		57CFCD8029EDD1AB00D66ED4 /* TestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsView.swift; sourceTree = "<group>"; };
 		57CFCD8229EDD68100D66ED4 /* ReactionTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReactionTest.swift; path = eADetector/tabs/ReactionTest.swift; sourceTree = SOURCE_ROOT; };
+		57CFCD8429EDFF4100D66ED4 /* SAGETest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SAGETest.swift; path = eADetector/tabs/SAGETest.swift; sourceTree = SOURCE_ROOT; };
 		9F2461BC298422A70060574F /* auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = auth.swift; sourceTree = "<group>"; };
 		9F2461C0298431520060574F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		9F2461C4298445400060574F /* DashBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashBoardView.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 			children = (
 				5728AD6129D2400400719A14 /* CardView.swift */,
 				57CFCD8229EDD68100D66ED4 /* ReactionTest.swift */,
+				57CFCD8429EDFF4100D66ED4 /* SAGETest.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				9F2461BD298422A70060574F /* auth.swift in Sources */,
 				9F2461C72984460E0060574F /* StatisticsView.swift in Sources */,
 				9F2461D72984C57E0060574F /* Activity.swift in Sources */,
+				57CFCD8529EDFF4100D66ED4 /* SAGETest.swift in Sources */,
 				9F2461C9298446250060574F /* SettingsView.swift in Sources */,
 				9F2461C1298431520060574F /* SignUpView.swift in Sources */,
 				9F2461D92984C81A0060574F /* ActivityViewModel.swift in Sources */,
