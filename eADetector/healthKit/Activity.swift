@@ -14,11 +14,12 @@ struct Activity: Identifiable, Hashable {
     
     static func allActivities() -> [Activity] {
         return [
-            Activity(id: "activeEnergyBurned", name: "Active Burned Calories", image: "⚡️"),
-            Activity(id: "appleExerciseTime", name: "Exercise Time", image: "🏋️‍♀️"),
-            Activity(id: "appleStandTime", name: "Stand Time", image: "🧍"),
-            Activity(id: "distanceWalkingRunning", name: "Distance Walking/Running", image: "🏃🏻‍♀️"),
-            Activity(id: "stepCount", name: "Step Count", image: "👣")
+            Activity(id: "oxygenSaturation", name: "Oxygen Saturation", image: "🧘"),
+            Activity(id: "activeEnergyBurned", name: "Active Energy", image: "⚡️"),
+            Activity(id: "sleepAnalysis", name: "Sleep Analysis", image: "💤"),
+            Activity(id: "stepCount", name: "Step Count", image: "👣"),
+            Activity(id: "appleStandTime", name: "Standing Time", image: "🧍‍♂️"),
+            Activity(id: "restingHeartRate", name: "Resting Heart Rate", image: "❤️"),
         ]
     }
 }

@@ -49,11 +49,18 @@ struct ContentView: View {
                     
                     // if we already did this part, then we should skip it
                     if start == end { return }
-                    var activeEnergy: [HealthStat] = []
-                    healthStore.requestHealthStat(by: "activeEnergyBurned", start: start, end: Date()) { hStats in
-                        activeEnergy = hStats
+
+                    Task {
+                        let activeEnergyStats = await healthStore.requestHealthStatAwait(by: "activeEnergyBurned", start: start, end: end)
+                        let oxygenStats = await healthStore.requestHealthStatAwait(by: "oxygenSaturation", start: start, end: end)
+                        let sleepAnalysis = await healthStore.requestHealthStatAwait(by: "sleepAnalysis", start: start, end: end)
+                        let stepCount = await healthStore.requestHealthStatAwait(by: "stepCount", start: start, end: end)
+                        let appleStandTime = await healthStore.requestHealthStatAwait(by: "appleStandTime", start: start, end: end)
+                        let heartRate = await healthStore.requestHealthStatAwait(by: "restingHeartRate", start: start, end: end)
+                        print(heartRate)
+                        await authSessionManager.processHealthData(start: start, end: end, activeEnergy: activeEnergyStats, oxygenSaturation: oxygenStats, sleepAnalysis: sleepAnalysis, stepCount: stepCount, appleStandTime: appleStandTime, heartRate: heartRate)
                     }
-                    authSessionManager.processHealthData(activeEnergyStat: activeEnergy)
+                    
                 }
             }
         }
