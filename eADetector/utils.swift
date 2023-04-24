@@ -32,3 +32,19 @@ func averageGroupsOfSeven(numbers: [Double]) -> [Double] {
 
     return averages
 }
+
+func nearestPastMonday(from: Date? = nil) -> Date {
+    let calendar: Calendar = Calendar.current
+    let now = from ?? Date()
+    
+    // Get the current weekday (1 for Sunday, 2 for Monday, ..., 7 for Saturday)
+    let currentWeekday = calendar.component(.weekday, from: now)
+    
+    // Calculate the number of days to go back to get the nearest past Monday
+    let daysToSubtract = currentWeekday == 1 ? 6 : currentWeekday - 2
+    
+    // Subtract the calculated number of days from the current date
+    let nearestMonday = calendar.date(byAdding: .day, value: -daysToSubtract, to: now)!
+    
+    return nearestMonday
+}

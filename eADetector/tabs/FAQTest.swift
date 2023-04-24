@@ -15,6 +15,7 @@ struct FAQQuestion: Identifiable {
 }
 
 struct FAQTest: View {
+    @EnvironmentObject var authSessionManager: AuthSessionManager
     @State private var answers: [String: Int] = [:]
     @State private var showingScore = false
     @State private var totalScore = 0
@@ -68,6 +69,9 @@ struct FAQTest: View {
                         }
                     }
                     showingScore = true
+                    Task {
+                        await authSessionManager.uploadTestScores(score: (Date(), Double(totalScore)), key: "faqScores")
+                    }
                 }
                 .padding()
                 .alert(isPresented: $showingScore) {

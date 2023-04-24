@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ReactionTest: View {
+    @EnvironmentObject var authSessionManager: AuthSessionManager
     @State private var isScreenGreen = false
     @State private var isGameStarted = false
     @State private var startTime = DispatchTime.now()
@@ -97,6 +98,9 @@ struct ReactionTest: View {
             } else {
                 // Game Over
                 isGameStarted = false
+                Task {
+                    await authSessionManager.uploadTestScores(score: (Date(), Double(getAverageReactionTime())),key: "reactionScores")
+                }
             }
         }
     }

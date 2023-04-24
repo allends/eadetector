@@ -74,6 +74,12 @@ final class AuthSessionManager: ObservableObject {
     @Published var db: Firestore
     @Published var user: UserInfo?
     @Published var eadScores: [Date: Double] = [:]
+    @Published var sageScores: [Date: Double] = [:]
+    @Published var ad8Scores: [Date: Double] = [:]
+    @Published var sageRecent: (Date, Double)?
+    @Published var ad8Recent: (Date, Double)?
+    @Published var reactionRecent: (Date, Double)?
+    @Published var faqRecent: (Date, Double)?
     
     init() {
         FirebaseApp.configure()
@@ -99,6 +105,8 @@ final class AuthSessionManager: ObservableObject {
             if error != nil {
                 print(error!.localizedDescription)
             } else {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd"
                 print(authResult?.user.uid)
                 // Create a user with the uid as the document title when they sign up
                 self.db.collection("users").document(authResult?.user.uid ?? "error").setData([
@@ -106,8 +114,8 @@ final class AuthSessionManager: ObservableObject {
                     "last": lastName,
                     "email": email,
                     "showOnboarding": true,
-                    "start": Date(),
-                    "end": Date()
+                    "start": dateFormatter.string(from: Date()),
+                    "end": dateFormatter.string(from: Date())
                 ])
                 self.fetchCurrentAuthSession()
             }
@@ -137,26 +145,30 @@ final class AuthSessionManager: ObservableObject {
         // make sure that we have a user session before we log in
         guard let user = Auth.auth().currentUser else { return }
         let userMetricRef = db.collection("users").document(user.uid).collection("metrics")
-        let dateFormatter = ISO8601DateFormatter()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         do {
             let snapShot = try await userMetricRef.getDocuments()
             snapShot.documents.forEach { document in
                 var documentData: [Date : Double] = [:]
                 for (date, score) in document.data() {
                     let dateObject = dateFormatter.date(from: date) ?? Date()
-                    print(dateObject)
                     let score = score as? Double ?? 0.0
                     documentData[dateObject] = score
                 }
                 let immutableData = documentData
                 if document.documentID == "eadScores" {
-                        DispatchQueue.main.async {
-                            self.eadScores = immutableData
-                        }
-                } else if document.documentID == "SAGE" {
-                    
-                } else if document.documentID == "AD8" {
-                    
+                    DispatchQueue.main.async {
+                        self.eadScores = immutableData
+                    }
+                } else if document.documentID == "sageScores" {
+                    DispatchQueue.main.async {
+                        self.sageScores = immutableData
+                    }
+                } else if document.documentID == "ad8Scores" {
+                    DispatchQueue.main.async {
+                        self.ad8Scores = immutableData
+                    }
                 }
             }
         } catch {
@@ -167,6 +179,8 @@ final class AuthSessionManager: ObservableObject {
     func fetchCurrentAuthSession() {
         guard let user = Auth.auth().currentUser else { return }
         let userRef = db.collection("users").document(user.uid)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         userRef.getDocument { (document, error) in
                 guard error == nil else {
                     print("error", error ?? "")
@@ -188,12 +202,23 @@ final class AuthSessionManager: ObservableObject {
                             age: data["age"] as? Int ?? 16,
                             familyRiskLevel: data["familyRiskLevel"] as? Int ?? 0,
                             sexRiskLevel: data["sexRiskLevel"] as? Int ?? 0,
-                            showOnboarding: data["showOnboarding"] as? Bool ?? false,
-                            startDate: (data["start"] as? Timestamp)?.dateValue() ?? Date(),
-                            endDate: (data["end"] as? Timestamp)?.dateValue() ?? Date(),
+                            showOnboarding: data["showOnboarding"] as? Bool ?? true,
+                            startDate: (dateFormatter.date(from: data["start"] as! String)) ?? nearestPastMonday(),
+                            endDate: (dateFormatter.date(from: data["end"] as! String)) ?? nearestPastMonday(),
                             scores: []
                         )
-                        print(newUser)
+                        if let score = data["sageScores"] as? [String: Any] {
+                            self.sageRecent = (dateFormatter.date(from: score["date"] as! String) ?? self.user!.startDate , score["score"] as? Double ?? 0.0)
+                        }
+                        if let score = data["ad8Scores"] as? [String: Any] {
+                            self.ad8Recent = (dateFormatter.date(from: score["date"] as! String) ?? self.user!.startDate, score["score"] as? Double ?? 0.0)
+                        }
+                        if let score = data["reactionScores"] as? [String: Any] {
+                            self.reactionRecent = (dateFormatter.date(from: score["date"] as! String) ?? self.user!.startDate, score["score"] as? Double ?? 0.0)
+                        }
+                        if let score = data["faqScores"] as? [String: Any] {
+                            self.faqRecent = (dateFormatter.date(from: score["date"] as! String) ?? self.user!.startDate, score["score"] as? Double ?? 0.0)
+                        }
                         self.user = newUser
                     }
                 }
@@ -244,21 +269,42 @@ final class AuthSessionManager: ObservableObject {
     }
     
     func uploadTestScores(score: (Date, Double), key: String) async {
+        guard let user = Auth.auth().currentUser else { return }
+        let nearestMonday = nearestPastMonday(from: score.0)
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        do {
+            try await db.collection("users").document(user.uid).collection("metrics").document(key).setData([
+                "\(dateFormatter.string(from: nearestMonday))": score.1
+            ], merge: true)
+            try await db.collection("users").document(user.uid).setData([
+                "\(key)": [ "score": score.1, "date": dateFormatter.string(from: nearestMonday) ]
+            ], merge: true)
+        } catch {
+            print("error uploading \(key) info")
+            return
+        }
+        fetchCurrentAuthSession()
     }
     
     func uploadWeeklyEADScore(scores: [(Date, Double)]) async {
         guard let user = Auth.auth().currentUser else { return }
-        let totalUploadData = (self.user?.scores ?? []) + scores
         // map the data to a dictionary
         var formattedData: [String: Any] = [:]
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         for (date, score) in scores {
-            formattedData["\(date)"] = score
+            formattedData["\(dateFormatter.string(from: date))"] = score
         }
         do {
             try await db.collection("users").document(user.uid).collection("metrics").document("eadScores").setData(formattedData, merge: true)
+            try await db.collection("users").document(user.uid).setData([
+                "end": dateFormatter.string(from: nearestPastMonday())
+            ], merge: true)
         } catch {
             print("error uploading eADScore info")
+            return
         }
         fetchCurrentAuthSession()
     }
@@ -284,7 +330,6 @@ final class AuthSessionManager: ObservableObject {
         let calendar = Calendar.current
         // make the requests
         var uploadData: [(Date, Double)] = []
-        let immutableData = uploadData
         for index in 0...requestsNeeded {
             // Define the data to send.
             let dataToSend: [String: [Double]] = [
@@ -294,6 +339,7 @@ final class AuthSessionManager: ObservableObject {
             let dataWeekStart = calendar.date(byAdding: .day, value: index * 7, to: start)
             uploadData.append((dataWeekStart ?? Date(), eADScore ?? 0.0))
         }
+        let immutableData = uploadData
         Task {
             await uploadWeeklyEADScore(scores: immutableData)
         }

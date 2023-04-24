@@ -30,7 +30,6 @@ final class HealthStore: ObservableObject {
     static let appleStandTime = HKObjectType.quantityType(forIdentifier: .appleStandTime)!
     static let restingHeartRate = HKObjectType.quantityType(forIdentifier: .restingHeartRate)!
     static let stepCount = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.stepCount)!
-//    static let walkingSteadiness = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.appleWalkingSteadiness)!
     static let oxygenLevels = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.oxygenSaturation)!
     static let sleepingWristTemperature = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.appleSleepingWristTemperature)!
     
@@ -44,12 +43,27 @@ final class HealthStore: ObservableObject {
         }
     }
     
+    func checkAllPerimission() -> Bool {
+        guard let healthStore = self.healthStore else { return false }
+        let energyShared = healthStore.authorizationStatus(for: HealthStore.activeEnergyBurned) == .sharingAuthorized
+        let standShared = healthStore.authorizationStatus(for: HealthStore.appleStandTime) == .sharingAuthorized
+        let heartShared = healthStore.authorizationStatus(for: HealthStore.restingHeartRate) == .sharingAuthorized
+        let stepShared = healthStore.authorizationStatus(for: HealthStore.stepCount) == .sharingAuthorized
+        let oxygenShared = healthStore.authorizationStatus(for: HealthStore.oxygenLevels) == .sharingAuthorized
+        let sleepingShared = healthStore.authorizationStatus(for: HealthStore.sleepingWristTemperature) == .sharingAuthorized
+        return energyShared && standShared && heartShared && stepShared && oxygenShared && sleepingShared
+    }
+
+    
     func requestAuthorization(completion: @escaping (Bool) -> Void) {
-        
-        guard let healthStore = self.healthStore else { return completion(false) }
+        guard let healthStore = self.healthStore else { return }
         
         healthStore.requestAuthorization(toShare: [], read: allTypes) { (success, error) in
             completion(success)
+            
+            DispatchQueue.main.async {
+                self.healthStore = HKHealthStore()
+            }
         }
         // TODO update the ui at this part
     }

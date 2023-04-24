@@ -57,7 +57,7 @@ struct ContentView: View {
                         let heartRate = await healthStore.requestHealthStatAwait(by: "restingHeartRate", start: start, end: end)
                         await authSessionManager.processHealthData(start: start, end: end, activeEnergy: activeEnergyStats, oxygenSaturation: oxygenStats, sleepAnalysis: sleepAnalysis, stepCount: stepCount, appleStandTime: appleStandTime, heartRate: heartRate)
                         await authSessionManager.fetchUserMetrics()
-                        print (authSessionManager.eadScores)
+                        print("ead scores", authSessionManager.eadScores)
                     }
                 }
             }

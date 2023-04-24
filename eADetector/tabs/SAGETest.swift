@@ -51,6 +51,7 @@ struct SageQuestionView: View {
 
 // View for SAGE Test
 struct SAGETest: View {
+    @EnvironmentObject var authSessionManager: AuthSessionManager
     @State private var questions: [SAGEQuestion] = []
     @State private var selectedAnswers: [Int?] = [nil, nil, nil, nil]
     @State private var score: Int? = nil
@@ -126,6 +127,9 @@ struct SAGETest: View {
         }
         score = totalScore
         showAnswers = true
+        Task {
+            await authSessionManager.uploadTestScores(score: (Date(), Double(totalScore)), key: "sageScores")
+        }
     }
     
 }

@@ -56,6 +56,7 @@ struct AD8QuestionView: View {
 
 
 struct AD8Test: View {
+    @EnvironmentObject var authSessionManager: AuthSessionManager
     @State private var questions: [AD8Question] = [
         AD8Question(text: "Problems with judgment (e.g., problems making decisions, bad financial decisions, problems with thinking)", answers: ["YES, A Change", "NO, No Change", "N/A, Don't Know"]),
         AD8Question(text: "Less interest in hobbies/activities", answers: ["YES, A Change", "NO, No Change", "N/A, Don't Know"]),
@@ -78,6 +79,9 @@ struct AD8Test: View {
             .padding(.bottom, 20)
             Button(action: {
                 submitted = true
+                Task {
+                    await authSessionManager.uploadTestScores(score: (Date(), Double(calculateScore())), key: "ad8Scores")
+                }
             }) {
                 Text("Submit")
                     .font(.headline)

@@ -12,6 +12,7 @@ struct SettingsView: View {
     
     @EnvironmentObject var authSessionManager: AuthSessionManager
     @EnvironmentObject var healthStore: HealthStore
+    @State var showHealthKitAlert = false
         
     // TODO: make it such that we can push notifications
     // TODO: make it such that we can view legal information
@@ -28,7 +29,12 @@ struct SettingsView: View {
                     healthStore.requestAuthorization { success in
                         print("Connected health data")
                     }
-                }).buttonStyle(.bordered)
+                    if !healthStore.checkAllPerimission() {
+                        showHealthKitAlert = true
+                    }
+                }).buttonStyle(.bordered).alert("HealthKit Access problem detected. Check your settings!", isPresented: $showHealthKitAlert) {
+                    Button("Ok", role: .cancel) {}
+                }
             }.navigationTitle("Settings")
         }
     }
