@@ -73,6 +73,7 @@ final class AuthSessionManager: ObservableObject {
     @Published var authState: AuthState = .login
     @Published var db: Firestore
     @Published var user: UserInfo?
+    @Published var eadScores: [Date: Double] = [:]
     
     init() {
         FirebaseApp.configure()
@@ -132,10 +133,35 @@ final class AuthSessionManager: ObservableObject {
         }
     }
     
-    func fetchUserMetrics() {
+    func fetchUserMetrics() async {
         // make sure that we have a user session before we log in
-        guard let user = self.user else { return }
-        
+        guard let user = Auth.auth().currentUser else { return }
+        let userMetricRef = db.collection("users").document(user.uid).collection("metrics")
+        let dateFormatter = ISO8601DateFormatter()
+        do {
+            let snapShot = try await userMetricRef.getDocuments()
+            snapShot.documents.forEach { document in
+                var documentData: [Date : Double] = [:]
+                for (date, score) in document.data() {
+                    let dateObject = dateFormatter.date(from: date) ?? Date()
+                    print(dateObject)
+                    let score = score as? Double ?? 0.0
+                    documentData[dateObject] = score
+                }
+                let immutableData = documentData
+                if document.documentID == "eadScores" {
+                        DispatchQueue.main.async {
+                            self.eadScores = immutableData
+                        }
+                } else if document.documentID == "SAGE" {
+                    
+                } else if document.documentID == "AD8" {
+                    
+                }
+            }
+        } catch {
+            print("error")
+        }
     }
 
     func fetchCurrentAuthSession() {
@@ -217,6 +243,10 @@ final class AuthSessionManager: ObservableObject {
         fetchCurrentAuthSession()
     }
     
+    func uploadTestScores(score: (Date, Double), key: String) async {
+        
+    }
+    
     func uploadWeeklyEADScore(scores: [(Date, Double)]) async {
         guard let user = Auth.auth().currentUser else { return }
         let totalUploadData = (self.user?.scores ?? []) + scores
@@ -225,7 +255,6 @@ final class AuthSessionManager: ObservableObject {
         for (date, score) in scores {
             formattedData["\(date)"] = score
         }
-        print("DATA", formattedData)
         do {
             try await db.collection("users").document(user.uid).collection("metrics").document("eadScores").setData(formattedData, merge: true)
         } catch {
@@ -255,6 +284,7 @@ final class AuthSessionManager: ObservableObject {
         let calendar = Calendar.current
         // make the requests
         var uploadData: [(Date, Double)] = []
+        let immutableData = uploadData
         for index in 0...requestsNeeded {
             // Define the data to send.
             let dataToSend: [String: [Double]] = [
@@ -264,8 +294,9 @@ final class AuthSessionManager: ObservableObject {
             let dataWeekStart = calendar.date(byAdding: .day, value: index * 7, to: start)
             uploadData.append((dataWeekStart ?? Date(), eADScore ?? 0.0))
         }
-        print(uploadData)
-        await uploadWeeklyEADScore(scores: uploadData)
+        Task {
+            await uploadWeeklyEADScore(scores: immutableData)
+        }
     }
     
 }

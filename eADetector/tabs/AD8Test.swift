@@ -13,6 +13,48 @@ struct AD8Question: Identifiable {
     let answers: [String]
 }
 
+struct AD8QuestionView: View {
+    @Binding var questions: [AD8Question]
+    @Binding var selectedAnswers: [Int?]
+    var i: Int
+    @Binding var submitted: Bool
+    var body: some View {
+        VStack {
+            Text(questions[i].text)
+                .font(.headline)
+                .padding(.bottom, 1)
+                .multilineTextAlignment(.leading)
+            ForEach(0..<questions[i].answers.count) { j in
+                HStack {
+                    Text(questions[i].answers[j])
+                    Spacer()
+                    if submitted {
+                        Image(systemName: selectedAnswers[i] == j ? "checkmark.circle.fill" : "circle")
+                            .foregroundColor(selectedAnswers[i] == j ? .blue : .gray)
+                            .onTapGesture {
+                                // Allow changing answer only if not yet submitted
+                                if !submitted {
+                                    selectedAnswers[i] = j
+                                }
+                            }
+                    } else {
+                        Image(systemName: selectedAnswers[i] == j ? "checkmark.circle.fill" : "circle")
+                            .foregroundColor(selectedAnswers[i] == j ? .blue : .gray)
+                            .onTapGesture {
+                                // Allow changing answer only if not yet submitted
+                                if !submitted {
+                                    selectedAnswers[i] = j
+                                }
+                            }
+                    }
+                }
+                .padding(EdgeInsets(top: 0, leading: 5, bottom: 1, trailing: 5))
+            }
+        }
+    }
+}
+
+
 struct AD8Test: View {
     @State private var questions: [AD8Question] = [
         AD8Question(text: "Problems with judgment (e.g., problems making decisions, bad financial decisions, problems with thinking)", answers: ["YES, A Change", "NO, No Change", "N/A, Don't Know"]),
@@ -31,38 +73,7 @@ struct AD8Test: View {
         ScrollView {
         VStack {
             ForEach(0..<questions.count) { i in
-                VStack {
-                    Text(questions[i].text)
-                        .font(.headline)
-                        .padding(.bottom, 1)
-                        .multilineTextAlignment(.leading)
-                    ForEach(0..<questions[i].answers.count) { j in
-                        HStack {
-                            Text(questions[i].answers[j])
-                            Spacer()
-                            if submitted {
-                                Image(systemName: selectedAnswers[i] == j ? "checkmark.circle.fill" : "circle")
-                                    .foregroundColor(selectedAnswers[i] == j ? .blue : .gray)
-                                    .onTapGesture {
-                                        // Allow changing answer only if not yet submitted
-                                        if !submitted {
-                                            selectedAnswers[i] = j
-                                        }
-                                    }
-                            } else {
-                                Image(systemName: selectedAnswers[i] == j ? "checkmark.circle.fill" : "circle")
-                                    .foregroundColor(selectedAnswers[i] == j ? .blue : .gray)
-                                    .onTapGesture {
-                                        // Allow changing answer only if not yet submitted
-                                        if !submitted {
-                                            selectedAnswers[i] = j
-                                        }
-                                    }
-                            }
-                        }
-                        .padding(EdgeInsets(top: 0, leading: 5, bottom: 1, trailing: 5))
-                    }
-                }
+                AD8QuestionView(questions: $questions, selectedAnswers: $selectedAnswers, i: i, submitted: $submitted)
             }
             .padding(.bottom, 20)
             Button(action: {

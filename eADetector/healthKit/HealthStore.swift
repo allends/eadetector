@@ -84,7 +84,6 @@ final class HealthStore: ObservableObject {
             rawResults.enumerateStatistics(from: startDate, to: endDate, with: { stats, _ in
                 if category == "oxygenSaturation" || category == "restingHeartRate" {
                     let stat = HealthStat(stat: stats.averageQuantity(), date: stats.startDate)
-                    print(stats)
                     results.append(stat)
                 } else {
                     let stat = HealthStat(stat: stats.sumQuantity(), date: stats.startDate)
@@ -94,7 +93,6 @@ final class HealthStore: ObservableObject {
             })
         } catch {
             print("Error info: \(error)")
-            return []
         }
         return results
 }
