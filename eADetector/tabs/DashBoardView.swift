@@ -45,6 +45,7 @@ struct DashBoardView: View {
                                 .sorted{ $0.0 < $1.0 }
                                 .map { ( dateFormatter.string(from: $0.key), $0.value) }
                         .last ?? (dateFormatter.string(from: Date()), 0.0)).1).withTitleStyles()
+                    Spacer()
                     eadScoreView()
                         
                     HStack {
@@ -55,6 +56,7 @@ struct DashBoardView: View {
                             ActivityView(activity: heartRate, repository: healthStore, formFactor: ChartForm.medium)
                         }
                     }
+                    Spacer()
                 }
                 Spacer()
             }.navigationTitle("Hello, \(authSessionManager.user?.first ?? "")").backgroundStyle(.background)
@@ -73,9 +75,7 @@ struct eadScoreView: View {
     
     var body: some View {
         VStack {
-            if authSessionManager.eadScores.count == 0 {
-                Text("No data available")
-            } else {
+            if authSessionManager.eadScores.count != 0 {
                 BarChartView(data: ChartData(values: authSessionManager.eadScores.sorted{ $0.0 < $1.0 }.suffix(4).map { (dateFormatter.string(from: $0.key), $0.value) }), title: "eADScore", form: ChartForm.extraLarge)
             }
         }

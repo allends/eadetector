@@ -76,10 +76,10 @@ final class AuthSessionManager: ObservableObject {
     @Published var eadScores: [Date: Double] = [:]
     @Published var sageScores: [Date: Double] = [:]
     @Published var ad8Scores: [Date: Double] = [:]
-    @Published var sageRecent: (Date, Double)?
-    @Published var ad8Recent: (Date, Double)?
-    @Published var reactionRecent: (Date, Double)?
-    @Published var faqRecent: (Date, Double)?
+    @Published var sageRecent: (Date?, Double)?
+    @Published var ad8Recent: (Date?, Double)?
+    @Published var reactionRecent: (Date?, Double)?
+    @Published var faqRecent: (Date?, Double)?
     
     init() {
         FirebaseApp.configure()
@@ -208,16 +208,16 @@ final class AuthSessionManager: ObservableObject {
                             scores: []
                         )
                         if let score = data["sageScores"] as? [String: Any] {
-                            self.sageRecent = (dateFormatter.date(from: score["date"] as! String) ?? self.user!.startDate , score["score"] as? Double ?? 0.0)
+                            self.sageRecent = (dateFormatter.date(from: score["date"] as! String), score["score"] as? Double ?? 0.0)
                         }
                         if let score = data["ad8Scores"] as? [String: Any] {
-                            self.ad8Recent = (dateFormatter.date(from: score["date"] as! String) ?? self.user!.startDate, score["score"] as? Double ?? 0.0)
+                            self.ad8Recent = (dateFormatter.date(from: score["date"] as! String), score["score"] as? Double ?? 0.0)
                         }
                         if let score = data["reactionScores"] as? [String: Any] {
-                            self.reactionRecent = (dateFormatter.date(from: score["date"] as! String) ?? self.user!.startDate, score["score"] as? Double ?? 0.0)
+                            self.reactionRecent = (dateFormatter.date(from: score["date"] as! String), score["score"] as? Double ?? 0.0)
                         }
                         if let score = data["faqScores"] as? [String: Any] {
-                            self.faqRecent = (dateFormatter.date(from: score["date"] as! String) ?? self.user!.startDate, score["score"] as? Double ?? 0.0)
+                            self.faqRecent = (dateFormatter.date(from: score["date"] as! String), score["score"] as? Double ?? 0.0)
                         }
                         self.user = newUser
                     }

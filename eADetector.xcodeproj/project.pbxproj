@@ -76,6 +76,7 @@
 		9F6A5CF229EAFD2900715A20 /* utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utils.swift; sourceTree = "<group>"; };
 		9F6A5CF429EAFE4B00715A20 /* SexStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SexStep.swift; sourceTree = "<group>"; };
 		9F6A5CF829EF12DD00715A20 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9F6A5CFA29F835E600715A20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9F6F1A7129AD5EF1007F70D5 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		9F6F1A7B29B245CC007F70D5 /* ActivityFullView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityFullView.swift; sourceTree = "<group>"; };
 		9F6F1A7E29B67C77007F70D5 /* Onboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboarding.swift; sourceTree = "<group>"; };
@@ -234,6 +235,7 @@
 		9FB75A8A2982B65B00759F0F /* eADetector */ = {
 			isa = PBXGroup;
 			children = (
+				9F6A5CFA29F835E600715A20 /* Info.plist */,
 				9F6A5CF829EF12DD00715A20 /* GoogleService-Info.plist */,
 				9F6F1A7D29B67C60007F70D5 /* Onboarding */,
 				9F6F1A7729AD93FB007F70D5 /* Authentication */,
@@ -515,8 +517,10 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Access to health records";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "Access to health records";
+				INFOPLIST_FILE = eADetector/Info.plist;
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Using your health records to update your alzheimers risk over time";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Using your health records to update your alzheimers risk over time";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Using your health records to update your alzheimers risk over time";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -532,7 +536,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.g15.capstone.eADetector;
+				PRODUCT_BUNDLE_IDENTIFIER = com.a15.capstone.eADetector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -559,8 +563,10 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Access to health records";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "Access to health records";
+				INFOPLIST_FILE = eADetector/Info.plist;
+				INFOPLIST_KEY_NSHealthClinicalHealthRecordsShareUsageDescription = "Using your health records to update your alzheimers risk over time";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Using your health records to update your alzheimers risk over time";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Using your health records to update your alzheimers risk over time";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -576,7 +582,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.g15.capstone.eADetector;
+				PRODUCT_BUNDLE_IDENTIFIER = com.a15.capstone.eADetector;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";

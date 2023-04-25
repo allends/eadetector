@@ -48,7 +48,7 @@ struct CardView: View {
                 if (test == "Reaction") {
                     NavigationLink(destination: ReactionTest()) {
                         Text("Start Test")}
-                }else if (test == "SAGE") {
+                } else if (test == "SAGE") {
                     NavigationLink(destination: SAGETest()) {
                         Text("Start SAGE Test")}
                 } else if (test == "AD8") {
